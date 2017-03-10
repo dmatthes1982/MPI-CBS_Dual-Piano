@@ -1,7 +1,6 @@
 function DualPiano_fftCommon( signal )
 
 Fs = 128;               % Sampling frequency                    
-T = 1/Fs;               % Sampling period       
 L = size(signal, 2);    % Length of signal
 
 Y = fft( signal );
@@ -20,7 +19,6 @@ ylabel('|P1(f)|');
 
 
 Fs = 128;               % Sampling frequency                    
-T = 1/Fs;               % Sampling period       
 L = 2048;               % Length of signal
 
 Z = fft( signal,  2048);

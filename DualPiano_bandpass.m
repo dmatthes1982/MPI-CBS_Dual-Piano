@@ -5,6 +5,7 @@ cfg.channel         = 'all';
 cfg.bpfilter        = 'yes';
 cfg.bpfilttype      = 'fir';
 cfg.bpfreq          = [lowfreq highfreq];
+cfg.bpfiltord       = fix(90/(highfreq - lowfreq));
 
 data_out = ft_preprocessing(cfg, data_in);
 
