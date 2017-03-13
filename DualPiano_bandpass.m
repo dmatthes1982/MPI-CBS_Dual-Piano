@@ -9,5 +9,7 @@ cfg.bpfiltord       = fix(90/(highfreq - lowfreq));
 
 data_out = ft_preprocessing(cfg, data_in);
 
+data_out.Mat_cond_pair = data_in.Mat_cond_pair;
+
 end
 

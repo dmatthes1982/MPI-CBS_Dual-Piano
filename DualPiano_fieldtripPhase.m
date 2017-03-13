@@ -20,7 +20,8 @@ cfg.method      = 'plv';
 cfg.trials      = trial;
 cfg.complex     = 'angle';
 
-
 data_out = ft_connectivityanalysis(cfg, TFRhann);
+
+data_out.Mat_cond_pair = data_in.Mat_cond_pair;
 
 end
