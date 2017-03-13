@@ -1,4 +1,4 @@
-function DualPiano_cmpPLVMethods( data_in, lfreq, hfreq, trial, cmp1, cmp2, winSize )
+function [ hilbert_avRatio ] = DualPiano_cmpPLVMethods( data_in, lfreq, hfreq, trial, cmp1, cmp2, winSize )
 
 warning('off','all');
 
@@ -6,6 +6,8 @@ time = data_in.time{trial};
 
 data_alpha = DualPiano_bandpass( data_in, lfreq, hfreq );
 data_hilbert = DualPiano_hilbert( data_alpha, 'angle');
+
+hilbert_avRatio = data_hilbert.hilbert_avRatio;
 
 phase1 = data_hilbert.trial{trial}(cmp1,:);
 phase2 = data_hilbert.trial{trial}(cmp2,:);
