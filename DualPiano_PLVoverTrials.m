@@ -1,4 +1,4 @@
-function [ PLVmean, hilbert_avRatio ] = DualPiano_PLVoverTrials( data_in, lfreq, hfreq, cmp1, cmp2, winSize )
+function [ PLVmean, PLVs, hilbert_avRatio ] = DualPiano_PLVoverTrials( data_in, lfreq, hfreq, cmp1, cmp2, winSize )
 
 warning('off','all');
 
@@ -23,12 +23,12 @@ end
 
 PLVmean = mean(PLVs, 1);
 
-figure(1);
-plot(time, PLVmean);
-hold on;
-title('Phase Locking Value');
-ylabel('PLV');
-xlabel('time in sec');
+% figure(1);
+% plot(time, PLVmean);
+% hold on;
+% title('Phase Locking Value');
+% ylabel('PLV');
+% xlabel('time in sec');
 
 warning('on','all');
 
