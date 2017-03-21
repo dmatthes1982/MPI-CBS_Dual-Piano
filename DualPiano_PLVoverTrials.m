@@ -2,7 +2,7 @@ function [ PLVmean, PLVs, hilbert_avRatio ] = DualPiano_PLVoverTrials( data_in, 
 
 warning('off','all');
 
-time = data_in.time{1};
+%time = data_in.time{1};
 trials = length(data_in.trial);
 trialLength = length(data_in.time{1});
 relPhase_hilbert = zeros(trials, trialLength);

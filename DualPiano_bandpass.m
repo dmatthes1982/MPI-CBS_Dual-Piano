@@ -6,6 +6,8 @@ cfg.bpfilter        = 'yes';
 cfg.bpfilttype      = 'fir';
 cfg.bpfreq          = [lowfreq highfreq];
 cfg.bpfiltord       = fix(90/(highfreq - lowfreq));
+cfg.feedback        = 'none';
+cfg.showcallinfo    = 'no';
 
 data_out = ft_preprocessing(cfg, data_in);
 

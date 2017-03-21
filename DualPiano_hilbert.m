@@ -7,16 +7,20 @@ trialLength = length (data_in.time{1});
 trialComp = length (data_in.label);
 
 % calculate instantaneous phase
-cfg             = [];
-cfg.channel     = 'all';
-cfg.hilbert     = 'angle';
+cfg                 = [];
+cfg.channel         = 'all';
+cfg.hilbert         = 'angle';
+cfg.feedback        = 'none';
+cfg.showcallinfo    = 'no';
 
 data_phase = ft_preprocessing(cfg, data_in);
 
 % calculate instantaenous amplitude
-cfg             = [];
-cfg.channel     = 'all';
-cfg.hilbert     = 'abs';
+cfg                 = [];
+cfg.channel         = 'all';
+cfg.hilbert         = 'abs';
+cfg.feedback        = 'none';
+cfg.showcallinfo    = 'no';
 
 data_amplitude = ft_preprocessing(cfg, data_in);
 

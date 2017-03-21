@@ -33,12 +33,10 @@ end
 
 % plot PLV cource
 plot(time, y);
-ylabel('PLV');
-xlabel('time in sec');
 xlim([time(1) time(end)]);
 y_limits = get(gca,'ylim');
 
-if( background == true )
+if( background == 1 )
   y_min = (min(data) - 0.01);
   y_max = (max(data) + 0.01);
 else
