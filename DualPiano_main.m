@@ -69,19 +69,23 @@ subplot(2,4,8,'replace');
 title('INCONGRUENT/UNFAMILIAR');
 xlabel('time in sec');
 
+cfgPlot             = [];                                                   % initialize plot conifg
+cfgPlot.time        = time;
+cfgPlot.marker      = marker;
+cfgPlot.background  = 1;
+cfgPlot.average     = 0;
+
 % -------------------------------------------------------------------------
 % Calculate PLV for all dyads, conditions and connections
 % -------------------------------------------------------------------------
 for dyad=1:1:dyads
   switch dyad                                                               % load the appropriate data
     case 1
-      background = 1;
-      average = 0;
       disp('01: processing data of dyad No. 3...');
     case 2
       clear data_CF data_CU data_UF data_UU
       load('../../Dual_PIANO_data/Components_epoched/P5comb_condSpec.mat');
-      background = 0;
+      cfgPlot.background = 0;
       disp('02: processing data of dyad No. 5...');
     case 3
       clear data_CF data_CU data_UF data_UU
@@ -146,21 +150,21 @@ for dyad=1:1:dyads
         data = data_UU;
     end
     
-    cfg           = [];                                                     % donfigure PLV calculation
-    cfg.lfreq     = alphaLow;                                               % define bandpass  
-    cfg.hfreq     = alphaHigh;
-    cfg.nmbcmp    = {motorRightPlayerOne, motorLeftPlayerTwo; ...           % define connections
+    cfgPLV           = [];                                                  % donfigure PLV calculation
+    cfgPLV.lfreq     = alphaLow;                                            % define bandpass  
+    cfgPLV.hfreq     = alphaHigh;
+    cfgPLV.nmbcmp    = {motorRightPlayerOne, motorLeftPlayerTwo; ...        % define connections
                       motorLeftPlayerOne, motorRightPlayerTwo};
-    cfg.winSize   = PLV_winSize;
+    cfgPLV.winSize   = PLV_winSize;
       
-    data_PLV = DualPiano_PLVoverTrials( cfg, data );                        % calculate PLV course averaged over trials for a single dyad
+    data_PLV = DualPiano_PLVoverTrials( cfgPLV, data );                     % calculate PLV course averaged over trials for a single dyad
                                                                             % and a specific condition
     if(min(min(data_PLV.hilbert_avRatio)) < 50)
       warning('Some "Hilbert average value" is < 50');
     end
     
     for i=1:1:connections
-      PLVep{i, dyad}(condition,1) = ...                                     % average the trial averaged PLV course for the three different epochs
+      PLVep{i, dyad}(condition,1) = ...                                     % average the trial averaged PLV course within the three different epochs
         mean(data_PLV.PLVmean{i}(FirstStart:FirstStop), 'omitnan');
       PLVep{i, dyad}(condition,2) = ...
         mean(data_PLV.PLVmean{i}(pauseStart:pauseStop), 'omitnan');
@@ -171,8 +175,7 @@ for dyad=1:1:dyads
       PLVmean{i, dyad} = data_PLV.PLVmean{i};
       
       subplot(2,4,condition+((i-1)*4));                                     % plot result
-      DualPiano_fancyPLVPlot(PLVep{i, dyad}(condition,:), ...
-        time, marker, background, average);
+      DualPiano_fancyPLVPlot(cfgPlot, PLVep{i, dyad}(condition,:));
     end % for connection
   end % for condition
 end % for dyad
@@ -188,15 +191,13 @@ end
 PLVepDyads{1,1} = PLVepDyads{1,1}./dyads;
 PLVepDyads{2,1} = PLVepDyads{2,1}./dyads;
 
-average = 1;                                                                % plot result
+cfgPlot.average = 1;                                                                % plot result
 
 for condition=1:1:4
   subplot(2,4,condition);
-  DualPiano_fancyPLVPlot(PLVepDyads{1,1}(condition,:), ...
-    time, marker, background, average);
+  DualPiano_fancyPLVPlot(cfgPlot, PLVepDyads{1,1}(condition,:));
   subplot(2,4,condition+4);
-  DualPiano_fancyPLVPlot(PLVepDyads{2,1}(condition,:), ...
-    time, marker, background, average);
+  DualPiano_fancyPLVPlot(cfgPlot, PLVepDyads{2,1}(condition,:));
 end
 
 disp('data processing accomplished!');
@@ -213,10 +214,10 @@ data_processed.PLVepDyads       = PLVepDyads;
 % Clear temporary variables in workspace
 % Release plots
 % -------------------------------------------------------------------------
-clear ans i cfg Fs alphaLow alphaHigh motorRightPlayerOne ... 
+clear ans i cfgPLV Fs alphaLow alphaHigh motorRightPlayerOne ... 
   motorLeftPlayerOne motorRightPlayerTwo motorLeftPlayerTwo PLV_winSize ...
   FirstStart FirstStop pauseStart pauseStop SecondStart SecondStop time ...
   nmbrProb marker componentA componentB condition connections data dyad ...
-  background data_PLV PLVep labelcmp dyads PLVs PLVmean data_CF data_CU ...
-  data_UF data_UU PLVepDyads average
+  data_PLV PLVep labelcmp dyads PLVs PLVmean data_CF data_CU data_UF ...
+  data_UU PLVepDyads cfgPlot
 figure(1); hold off;

@@ -1,30 +1,30 @@
-function DualPiano_fancyPLVPlot( data, time, marker, background, average )
+function DualPiano_fancyPLVPlot( cfg, data_in )
 
-data_elements         = length(data);
-marker_elements       = length(marker);
+data_elements         = length(data_in);
+marker_elements       = length(cfg.marker);
 y                     = 0;
 
 if( data_elements ~= marker_elements + 1 )
-  error('length(data) ~= length(marker) + 1');
+  error('length(data) ~= length(cfg.marker) + 1');
 end
 
 for i=1:1:marker_elements
-  y = y + ((data(i+1)-data(i))/2)*tanh(5*(time - marker(i)));
+  y = y + ((data_in(i+1)-data_in(i))/2)*tanh(5*(cfg.time - cfg.marker(i)));
 end
 
-y = y + ((data(1) + data(end))/2);
+y = y + ((data_in(1) + data_in(end))/2);
 
 % plot epoch patches
-if( background == 1)
-  x_vect = [0 marker(1) marker(1) 0];
+if( cfg.background == 1)
+  x_vect = [0 cfg.marker(1) cfg.marker(1) 0];
   y_vect = [0 0 1 1];
   patch(x_vect, y_vect, [1 0 0], 'LineStyle', 'none', 'FaceAlpha', 0.05);
 
-  x_vect = [marker(1) marker(2) marker(2) marker(1)];
+  x_vect = [cfg.marker(1) cfg.marker(2) cfg.marker(2) cfg.marker(1)];
   y_vect = [0 0 1 1];
   patch(x_vect, y_vect, [1 1 0], 'LineStyle', 'none', 'FaceAlpha', 0.05);
 
-  x_vect = [marker(2) time(end) time(end) marker(2)];
+  x_vect = [cfg.marker(2) cfg.time(end) cfg.time(end) cfg.marker(2)];
   y_vect = [0 0 1 1];
   patch(x_vect, y_vect, [0 1 0], 'LineStyle', 'none', 'FaceAlpha', 0.05);
 
@@ -32,27 +32,27 @@ if( background == 1)
 end
 
 % plot PLV cource
-if average == 0
-  plot(time, y);
+if cfg.average == 0
+  plot(cfg.time, y);
 else
-  plot(time, y, 'Color', 'black', 'LineStyle', '--', 'LineWidth', 2);
+  plot(cfg.time, y, 'Color', 'black', 'LineStyle', '--', 'LineWidth', 2);
 end
   
-xlim([time(1) time(end)]);
+xlim([cfg.time(1) cfg.time(end)]);
 y_limits = get(gca,'ylim');
 
-if( background == 1 )
-  y_min = (min(data) - 0.01);
-  y_max = (max(data) + 0.01);
+if( cfg.background == 1 )
+  y_min = (min(data_in) - 0.01);
+  y_max = (max(data_in) + 0.01);
 else
-  if( y_limits(1) > (min(data) - 0.01) )
-    y_min = (min(data) - 0.01);
+  if( y_limits(1) > (min(data_in) - 0.01) )
+    y_min = (min(data_in) - 0.01);
   else
     y_min = y_limits(1);
   end
 
-  if( y_limits(2) < (max(data) + 0.01) )
-    y_max = (max(data) + 0.01);
+  if( y_limits(2) < (max(data_in) + 0.01) )
+    y_max = (max(data_in) + 0.01);
   else
     y_max = y_limits(2);
   end
