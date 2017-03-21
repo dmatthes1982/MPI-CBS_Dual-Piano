@@ -1,4 +1,4 @@
-function DualPiano_fancyPLVPlot( data, time, marker, background )
+function DualPiano_fancyPLVPlot( data, time, marker, background, average )
 
 data_elements         = length(data);
 marker_elements       = length(marker);
@@ -32,7 +32,12 @@ if( background == 1)
 end
 
 % plot PLV cource
-plot(time, y);
+if average == 0
+  plot(time, y);
+else
+  plot(time, y, 'Color', 'black', 'LineStyle', '--', 'LineWidth', 2);
+end
+  
 xlim([time(1) time(end)]);
 y_limits = get(gca,'ylim');
 

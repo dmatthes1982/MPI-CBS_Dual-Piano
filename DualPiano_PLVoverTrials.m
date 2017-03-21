@@ -1,34 +1,37 @@
-function [ PLVmean, PLVs, hilbert_avRatio ] = DualPiano_PLVoverTrials( data_in, lfreq, hfreq, cmp1, cmp2, winSize )
+function [ data_out ] = DualPiano_PLVoverTrials( cfg, data_in )
 
 warning('off','all');
 
-%time = data_in.time{1};
-trials = length(data_in.trial);
-trialLength = length(data_in.time{1});
-relPhase_hilbert = zeros(trials, trialLength);
-PLVs = zeros(trials, trialLength);
+trials            = length(data_in.trial);
+trialLength       = length(data_in.time{1});
+connections       = length(cfg.nmbcmp);
+relPhase_hilbert  = cell(connections, 1);
+PLVs              = cell(connections, 1);
+PLVmean           = cell(connections, 1);
 
-data_alpha = DualPiano_bandpass( data_in, lfreq, hfreq );
+for k=1:1:connections
+  relPhase_hilbert{k} = zeros(trials, trialLength);
+  PLVs{k}             = zeros(trials, trialLength);
+end
+
+data_alpha = DualPiano_bandpass( data_in, cfg.lfreq, cfg.hfreq );
 data_hilbert = DualPiano_hilbert( data_alpha, 'angle');
 
 hilbert_avRatio = data_hilbert.hilbert_avRatio;
 
-for i=1:1:trials
-    relPhase_hilbert(i, :) = data_hilbert.trial{i}(cmp1,:) - data_hilbert.trial{i}(cmp2,:);
+for k=1:1:connections
+  for i=1:1:trials
+    relPhase_hilbert{k}(i, :) = data_hilbert.trial{i}(cfg.nmbcmp{k,1},:) ...
+      - data_hilbert.trial{i}(cfg.nmbcmp{k,2},:);
+    PLVs{k}(i, :) = DualPiano_phaseLockVal(relPhase_hilbert{k}(i, :), ...
+      cfg.winSize);
+  end
+  PLVmean{k} = mean(PLVs{k}, 1);
 end
 
-for i=1:1:trials
-    PLVs(i, :) = DualPiano_phaseLockVal(relPhase_hilbert(i, :), winSize);
-end
-
-PLVmean = mean(PLVs, 1);
-
-% figure(1);
-% plot(time, PLVmean);
-% hold on;
-% title('Phase Locking Value');
-% ylabel('PLV');
-% xlabel('time in sec');
+data_out.PLVmean = PLVmean;
+data_out.PLVs = PLVs;
+data_out.hilbert_avRatio = hilbert_avRatio;
 
 warning('on','all');
 
