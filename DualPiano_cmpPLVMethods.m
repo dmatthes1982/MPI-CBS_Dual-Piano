@@ -1,24 +1,59 @@
-function [ hilbert_avRatio ] = DualPiano_cmpPLVMethods( data_in, lfreq, hfreq, trial, cmp1, cmp2, winSize )
+function [ hilbert_avRatio ] = DualPiano_cmpPLVMethods( data_in, lfreq, ...
+  hfreq, trial, cmp1, cmp2, winSize )
+% DUALPIANO_CMPPLVMETHODS compares two diffent methods for the phase lock
+% value (PLV) estimation
+%
+% Params:
+%   data_in         fieldtrip data structure
+%   lfreq           lower cutoff frequency
+%   hfreq           higher cutoff frequency
+%   trial           number of the selected trial
+%   cmp1            number of the first component
+%   cmp2            number of the second component
+%   winSize         window size for a sliding PLV calculation over time
+%
+% Output:
+%   hilbert_avRatio   hilbert average ratio for validity control
+%
+% The first method utilize the FFT and the FT_CONNECTIVITYANALYSIS.
+% The second method depends on the Hilbert transform
+%
+% This function requires the fieldtrip toolbox
+%
+% See also DUALPIANO_BANDPASS, DUALPIANO_HILBERT, DUALPIANO_FIELDTRIPPHASE,
+% DUALPIANO_PHASELOCKVAL
 
-warning('off','all');
+% Copyright (C) 2017, Daniel Matthes, MPI CBS
 
-time = data_in.time{trial};
+warning('off','all'); 
 
-data_alpha = DualPiano_bandpass( data_in, lfreq, hfreq );
-data_hilbert = DualPiano_hilbert( data_alpha, 'angle');
+time = data_in.time{trial};                                                 % extract the time vector                                               
 
-hilbert_avRatio = data_hilbert.hilbert_avRatio;
+% -------------------------------------------------------------------------
+% First method ("Hilbert-Method")
+% -------------------------------------------------------------------------
+data_filt = DualPiano_bandpass( data_in, lfreq, hfreq );                    % extract the desired passband
+data_hilbert = DualPiano_hilbert( data_filt, 'angle');                      % extimate the hilbert phase
 
-phase1 = data_hilbert.trial{trial}(cmp1,:);
-phase2 = data_hilbert.trial{trial}(cmp2,:);
-relPhase_hilbert = phase1 - phase2;
-PLV_hilbert = DualPiano_phaseLockVal(relPhase_hilbert, winSize);
+hilbert_avRatio = data_hilbert.hilbert_avRatio;                             % save the hilbert average ratio (control validity)
+                                                                            % see DUALPIANO_HILBERT for further informations
+phase1 = data_hilbert.trial{trial}(cmp1,:);                                 % extract phase of first component
+phase2 = data_hilbert.trial{trial}(cmp2,:);                                 % extract phase of the second component
+relPhase_hilbert = phase1 - phase2;                                         % extimate phase difference
+PLV_hilbert = DualPiano_phaseLockVal(relPhase_hilbert, winSize);            % calculate PLV (see DUALPIANO_PHASELOCKVAL) for further informations
 
-data_fieldtripPhase = DualPiano_fieldtripPhase( data_in, lfreq, hfreq, trial, cmp1, cmp2 );
-slot = ceil((hfreq+lfreq)/2/(hfreq-lfreq));
-relPhase_fieldtrip(:) = data_fieldtripPhase.plvspctrm(1, slot, :);
-PLV_fieldtrip = DualPiano_phaseLockVal(relPhase_fieldtrip, winSize);
+% -------------------------------------------------------------------------
+% Second method ("FFT-Method")
+% -------------------------------------------------------------------------
+data_fieldtripPhase = DualPiano_fieldtripPhase( data_in, lfreq, hfreq, ...  % estimate the phase difference using FT_CONNECTIVITYANALYSIS 
+                                            trial, cmp1, cmp2 );            % together with 'plv' param.
+slot = ceil((hfreq+lfreq)/2/(hfreq-lfreq));                                 % extract the desired passband
+relPhase_fieldtrip(:) = data_fieldtripPhase.plvspctrm(1, slot, :);          % extract phase difference information
+PLV_fieldtrip = DualPiano_phaseLockVal(relPhase_fieldtrip, winSize);        % calculate PLV
 
+% -------------------------------------------------------------------------
+% Plot result of first method
+% -------------------------------------------------------------------------
 figure;
 plot(time ,mod(relPhase_hilbert, 2*pi));
 hold on;
@@ -28,6 +63,9 @@ xlabel('time in sec');
 plot(time ,mod(relPhase_fieldtrip, 2*pi));
 legend('phaseDiff-hilbert', 'phaseDiff-fft');
 
+% -------------------------------------------------------------------------
+% Plot result of second method
+% -------------------------------------------------------------------------
 figure;
 plot(time ,PLV_hilbert);
 hold on;
