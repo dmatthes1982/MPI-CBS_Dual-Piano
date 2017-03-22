@@ -2,6 +2,28 @@ function [ data_out ] = DualPiano_PLVoverTrials( cfg, data_in )
 
 warning('off','all');
 
+% abort if cfg.time or cfg.marker is missing
+if ~isfield(cfg, 'nmbcmp')
+  error('No cfg.nmbcmp defined!');
+end  
+if ~isfield(cfg, 'labelcmp')
+  error('No cfg.labelcmp defined!');
+end
+
+% set the defaults
+if ~isfield(cfg, 'lfreq')
+  cfg.lfreq       = 9;
+end
+if ~isfield(cfg, 'hfreq')
+  cfg.hfreq       = 11;
+end
+if ~isfield(cfg, 'winSize')
+  cfg.winSize     = 128;
+end
+if ~isfield(cfg, 'rmErrTrls')
+  cfg.rmErrTrls   = false;
+end
+
 trials            = length(data_in.trial);
 trialLength       = length(data_in.time{1});
 connections       = length(cfg.nmbcmp);

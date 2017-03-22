@@ -41,7 +41,7 @@ end
 % -------------------------------------------------------------------------
 % Initialize plots
 % -------------------------------------------------------------------------
-figure(1);                                                                  % initialize figure with 8 subplots
+figure;                                                                     % initialize figure with 8 subplots
 subplot(2,4,1,'replace');                                                   % one for each pair of condition and connection
 title('CONGRUENT/FAMILIAR');
 ylabel('PLV - Pl1 right vs. Pl2 left');

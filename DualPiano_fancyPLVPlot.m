@@ -1,5 +1,21 @@
 function DualPiano_fancyPLVPlot( cfg, data_in )
 
+% abort if cfg.time or cfg.marker is missing
+if ~isfield(cfg, 'time')
+  error('No cfg.time defined!');
+end  
+if ~isfield(cfg, 'marker')
+  error('No cfg.marker defined!');
+end
+
+% set the defaults
+if ~isfield(cfg, 'background')
+  cfg.background    = false;
+end
+if ~isfield(cfg, 'average')
+  cfg.average       = false;
+end
+
 data_elements         = length(data_in);
 marker_elements       = length(cfg.marker);
 y                     = 0;
