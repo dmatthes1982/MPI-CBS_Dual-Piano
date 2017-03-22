@@ -72,8 +72,8 @@ xlabel('time in sec');
 cfgPlot             = [];                                                   % initialize plot conifg
 cfgPlot.time        = time;
 cfgPlot.marker      = marker;
-cfgPlot.background  = 1;
-cfgPlot.average     = 0;
+cfgPlot.background  = true;
+cfgPlot.average     = false;
 
 % -------------------------------------------------------------------------
 % Calculate PLV for all dyads, conditions and connections
@@ -85,7 +85,7 @@ for dyad=1:1:dyads
     case 2
       clear data_CF data_CU data_UF data_UU
       load('../../Dual_PIANO_data/Components_epoched/P5comb_condSpec.mat');
-      cfgPlot.background = 0;
+      cfgPlot.background = false;
       disp('02: processing data of dyad No. 5...');
     case 3
       clear data_CF data_CU data_UF data_UU
@@ -141,13 +141,17 @@ for dyad=1:1:dyads
   for condition=1:1:4
     switch condition                                                        % select condition
       case 1
-        data = data_CF;       
+        data = data_CF;
+        disp('    condition CONGRUENT/FAMILIAR');
       case 2
         data = data_CU;
+        disp('    condition CONGRUENT/UNFAMILIAR');
       case 3
         data = data_UF;
+        disp('    condition INCONGRUENT/FAMILIAR');
       case 4
         data = data_UU;
+        disp('    condition INCONGRUENT/UNFAMILIAR');
     end
     
     cfgPLV           = [];                                                  % donfigure PLV calculation
@@ -155,7 +159,9 @@ for dyad=1:1:dyads
     cfgPLV.hfreq     = alphaHigh;
     cfgPLV.nmbcmp    = {motorRightPlayerOne, motorLeftPlayerTwo; ...        % define connections
                       motorLeftPlayerOne, motorRightPlayerTwo};
+    cfgPLV.labelcmp  = labelcmp;
     cfgPLV.winSize   = PLV_winSize;
+    cfgPLV.rmErrTrls = true;                                                % exclude trials with errors
       
     data_PLV = DualPiano_PLVoverTrials( cfgPLV, data );                     % calculate PLV course averaged over trials for a single dyad
                                                                             % and a specific condition
@@ -191,7 +197,7 @@ end
 PLVepDyads{1,1} = PLVepDyads{1,1}./dyads;
 PLVepDyads{2,1} = PLVepDyads{2,1}./dyads;
 
-cfgPlot.average = 1;                                                                % plot result
+cfgPlot.average = true;                                                     % plot result
 
 for condition=1:1:4
   subplot(2,4,condition);
@@ -202,7 +208,9 @@ end
 
 disp('data processing accomplished!');
 
-data_processed.connections      = connections;                              % put all relevant intermediate results to an output data structure
+data_processed.fsample          = Fs;                                       % put all relevant intermediate results to an output data structure
+data_processed.time             = time;
+data_processed.connections      = connections;                              
 data_processed.dyads            = dyads;
 data_processed.labelcmp         = labelcmp;
 data_processed.PLVep            = PLVep;

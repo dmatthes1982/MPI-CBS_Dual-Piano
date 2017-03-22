@@ -17,7 +17,14 @@ end
 data_alpha = DualPiano_bandpass( data_in, cfg.lfreq, cfg.hfreq );
 data_hilbert = DualPiano_hilbert( data_alpha, 'angle');
 
-hilbert_avRatio = data_hilbert.hilbert_avRatio;
+if cfg.rmErrTrls == true
+  errPlOne = data_hilbert.Mat_cond_pair(:,4);
+  errPlTwo = data_hilbert.Mat_cond_pair(:,5);
+  noError         = ~(errPlOne | errPlTwo);
+  accurateTrials  = sum(noError);
+    
+  fprintf('    select %d error-free trials...\n', accurateTrials);
+end
 
 for k=1:1:connections
   for i=1:1:trials
@@ -26,12 +33,20 @@ for k=1:1:connections
     PLVs{k}(i, :) = DualPiano_phaseLockVal(relPhase_hilbert{k}(i, :), ...
       cfg.winSize);
   end
-  PLVmean{k} = mean(PLVs{k}, 1);
+  if cfg.rmErrTrls == true
+    tmpPLV = PLVs{k};
+    tmpPLV = tmpPLV .* noError;
+    PLVmean{k} = sum(tmpPLV, 1)/accurateTrials;  
+  else
+    PLVmean{k} = mean(PLVs{k}, 1);
+  end
 end
 
+data_out = data_hilbert;
+data_out = rmfield(data_out, {'unmixing','topo', 'topolabel','trial','cfg'});
+data_out.labelcmp = cfg.labelcmp;
 data_out.PLVmean = PLVmean;
 data_out.PLVs = PLVs;
-data_out.hilbert_avRatio = hilbert_avRatio;
 
 warning('on','all');
 

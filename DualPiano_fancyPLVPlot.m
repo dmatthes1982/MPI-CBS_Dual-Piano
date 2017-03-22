@@ -15,7 +15,7 @@ end
 y = y + ((data_in(1) + data_in(end))/2);
 
 % plot epoch patches
-if( cfg.background == 1)
+if( cfg.background == true)
   x_vect = [0 cfg.marker(1) cfg.marker(1) 0];
   y_vect = [0 0 1 1];
   patch(x_vect, y_vect, [1 0 0], 'LineStyle', 'none', 'FaceAlpha', 0.05);
@@ -32,7 +32,7 @@ if( cfg.background == 1)
 end
 
 % plot PLV cource
-if cfg.average == 0
+if cfg.average == false
   plot(cfg.time, y);
 else
   plot(cfg.time, y, 'Color', 'black', 'LineStyle', '--', 'LineWidth', 2);
@@ -41,7 +41,7 @@ end
 xlim([cfg.time(1) cfg.time(end)]);
 y_limits = get(gca,'ylim');
 
-if( cfg.background == 1 )
+if( cfg.background == true )
   y_min = (min(data_in) - 0.01);
   y_max = (max(data_in) + 0.01);
 else
