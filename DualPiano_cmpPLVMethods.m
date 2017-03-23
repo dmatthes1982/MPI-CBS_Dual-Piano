@@ -33,7 +33,7 @@ time = data_in.time{trial};                                                 % ex
 % First method ("Hilbert-Method")
 % -------------------------------------------------------------------------
 data_filt = DualPiano_bandpass( data_in, lfreq, hfreq );                    % extract the desired passband
-data_hilbert = DualPiano_hilbert( data_filt, 'angle');                      % extimate the hilbert phase
+data_hilbert = DualPiano_hilbert( data_filt, 'angle');                      % estimate the hilbert phase
 
 hilbert_avRatio = data_hilbert.hilbert_avRatio;                             % save the hilbert average ratio (control validity)
                                                                             % see DUALPIANO_HILBERT for further informations

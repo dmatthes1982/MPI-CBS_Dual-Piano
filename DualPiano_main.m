@@ -1,3 +1,22 @@
+% DUALPIANO_MAIN 
+% 
+% This script estimates and illustrates the epoch-related phase locking
+% values of two connections (run11_pl1 vs. run14_pl2 and run14_pl1
+% vs. run11_pl2) selected from the DualPiano dataset. The estimation is 
+% done across all dyads (14) and for all conditions (CONGRUENT/FAMILIAR, 
+% CONGRUENT/UNFAMILIAR, INCONGRUENT/FAMILIAR, INCONGRUENT/UNFAMILIAR) The 
+% graphic consists of eight plots in a 2x4 order. Each plot is connected 
+% with one pair of condition and connection. The colored solid lines of 
+% each plot are connected to single dyads. The black dashed lines show the 
+% average over all dyads for each pair of condition and connection.
+%
+% Using the variables freqLow and freqHigh, the desired passband can be
+% specified.
+%
+% This script requires the fieldtrip toolbox.
+
+% Copyright (C) 2017, Daniel Matthes, MPI CBS
+
 % -------------------------------------------------------------------------
 % General definitions
 % -------------------------------------------------------------------------
@@ -6,8 +25,8 @@ clear data_CF data_CU data_UF data_UU
 load('../../Dual_PIANO_data/Components_epoched/P3comb_condSpec.mat');
 
 Fs                        = data_CF.fsample;                                % sampling rate
-alphaLow                  = 9;                                              % lower bandpass frequency
-alphaHigh                 = 11;                                             % upper bandpass frequency  
+freqLow                   = 9;                                              % lower bandpass frequency
+freqHigh                  = 11;                                             % upper bandpass frequency  
 dyads                     = 14;                                             % number of different dyads
 connections               = 2;                                              % number of connections to be investigated
 labelcmp                  = {'run11_pl1', 'run14_pl2'; 'run14_pl1', ...     % labels to be compared
@@ -69,7 +88,7 @@ subplot(2,4,8,'replace');
 title('INCONGRUENT/UNFAMILIAR');
 xlabel('time in sec');
 
-cfgPlot             = [];                                                   % initialize plot conifg
+cfgPlot             = [];                                                   % initialize the plot config
 cfgPlot.time        = time;
 cfgPlot.marker      = marker;
 cfgPlot.background  = true;
@@ -154,9 +173,9 @@ for dyad=1:1:dyads
         disp('    condition INCONGRUENT/UNFAMILIAR');
     end
     
-    cfgPLV           = [];                                                  % donfigure PLV calculation
-    cfgPLV.lfreq     = alphaLow;                                            % define bandpass  
-    cfgPLV.hfreq     = alphaHigh;
+    cfgPLV           = [];                                                  % configure PLV calculation
+    cfgPLV.lfreq     = freqLow;                                             % define bandpass  
+    cfgPLV.hfreq     = freqHigh;
     cfgPLV.nmbcmp    = {motorRightPlayerOne, motorLeftPlayerTwo; ...        % define connections
                       motorLeftPlayerOne, motorRightPlayerTwo};
     cfgPLV.labelcmp  = labelcmp;
@@ -165,8 +184,9 @@ for dyad=1:1:dyads
       
     data_PLV = DualPiano_PLVoverTrials( cfgPLV, data );                     % calculate PLV course averaged over trials for a single dyad
                                                                             % and a specific condition
-    if(min(min(data_PLV.hilbert_avRatio)) < 50)
-      warning('Some "Hilbert average value" is < 50');
+    if(min(min(data_PLV.hilbert_avRatio)) < 50)                             % display a warning, 
+      warning('Some "Hilbert average value" is < 50.');                     % if in some dataset the narrow passband condition is violated
+      warning('The narrow passband condition is violated');
     end
     
     for i=1:1:connections
@@ -197,7 +217,7 @@ end
 PLVepDyads{1,1} = PLVepDyads{1,1}./dyads;
 PLVepDyads{2,1} = PLVepDyads{2,1}./dyads;
 
-cfgPlot.average = true;                                                     % plot result
+cfgPlot.average = true;                                                     % plot the dyad-averaged PLVs
 
 for condition=1:1:4
   subplot(2,4,condition);
@@ -206,7 +226,7 @@ for condition=1:1:4
   DualPiano_fancyPLVPlot(cfgPlot, PLVepDyads{2,1}(condition,:));
 end
 
-disp('data processing accomplished!');
+disp('data processing accomplished!');                                      % note the end of the process
 
 data_processed.fsample          = Fs;                                       % put all relevant intermediate results to an output data structure
 data_processed.time             = time;
@@ -220,7 +240,7 @@ data_processed.PLVepDyads       = PLVepDyads;
 
 % -------------------------------------------------------------------------
 % Clear temporary variables in workspace
-% Release plots
+% Release figure
 % -------------------------------------------------------------------------
 clear ans i cfgPLV Fs alphaLow alphaHigh motorRightPlayerOne ... 
   motorLeftPlayerOne motorRightPlayerTwo motorLeftPlayerTwo PLV_winSize ...
