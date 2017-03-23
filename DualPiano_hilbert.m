@@ -33,7 +33,7 @@ trialComp = length (data_in.label);                                         % ge
 cfg                 = [];
 cfg.channel         = 'all';
 cfg.hilbert         = 'angle';
-cfg.feedback        = 'none';
+cfg.feedback        = 'no';
 cfg.showcallinfo    = 'no';
 
 data_phase = ft_preprocessing(cfg, data_in);
@@ -44,7 +44,7 @@ data_phase = ft_preprocessing(cfg, data_in);
 cfg                 = [];
 cfg.channel         = 'all';
 cfg.hilbert         = 'abs';
-cfg.feedback        = 'none';
+cfg.feedback        = 'no';
 cfg.showcallinfo    = 'no';
 
 data_amplitude = ft_preprocessing(cfg, data_in);

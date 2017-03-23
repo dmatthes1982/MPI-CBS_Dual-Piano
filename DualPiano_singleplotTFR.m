@@ -53,11 +53,13 @@ end
 % -------------------------------------------------------------------------
 % Create figure
 % -------------------------------------------------------------------------
-cfg             = [];                                                       
-cfg.maskstyle   = 'saturation';
-cfg.xlim        = [0.5 10.5];                                                   
-cfg.zlim        = 'maxmin';
-cfg.trials      = trial;                                                    % select trial (or 'all' trials)
+cfg                 = [];                                                       
+cfg.maskstyle       = 'saturation';
+cfg.xlim            = [0.5 10.5];                                                   
+cfg.zlim            = 'maxmin';
+cfg.trials          = trial;                                                % select trial (or 'all' trials)
+cfg.feedback        = 'no';                                                 % suppress feedback output
+cfg.showcallinfo    = 'no';                                                 % suppress function call output
 
 figure
 colormap jet;                                                               % use the older and more common colormap

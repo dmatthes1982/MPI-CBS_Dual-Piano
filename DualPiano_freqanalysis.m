@@ -19,17 +19,19 @@ function [ data_out ] = DualPiano_freqanalysis(data_in)
 
 warning('off','all');
 
-cfg             = [];
-cfg.method      = 'mtmconvol';
-cfg.output      = 'pow';
-cfg.channel     = 'all';                                                    % calculate spectrum of every channel  
-cfg.trials      = 'all';                                                    % calculate spectrum for every trial  
-cfg.keeptrials  = 'yes';                                                    % do not average over trials
-cfg.pad         = 'nextpow2';                                               % use fast calculation method
-cfg.taper       = 'hanning';                                                % hanning taper the segments
-cfg.foi         = 1:1:30;                                                   % analysis 1 to 30 Hz in steps of 1 Hz 
-cfg.t_ftimwin   = ones(length(cfg.foi),1).*1;                               % length of time window = 1 sec
-cfg.toi         = 'all';                                                    % spectral estimates on each sample
+cfg                 = [];
+cfg.method          = 'mtmconvol';
+cfg.output          = 'pow';
+cfg.channel         = 'all';                                                % calculate spectrum of every channel  
+cfg.trials          = 'all';                                                % calculate spectrum for every trial  
+cfg.keeptrials      = 'yes';                                                % do not average over trials
+cfg.pad             = 'nextpow2';                                           % use fast calculation method
+cfg.taper           = 'hanning';                                            % hanning taper the segments
+cfg.foi             = 1:1:30;                                               % analysis 1 to 30 Hz in steps of 1 Hz 
+cfg.t_ftimwin       = ones(length(cfg.foi),1).*1;                           % length of time window = 1 sec
+cfg.toi             = 'all';                                                % spectral estimates on each sample
+cfg.feedback        = 'no';                                               % suppress feedback output
+cfg.showcallinfo    = 'no';                                                 % suppress function call output
 
 data_out = ft_freqanalysis(cfg, data_in);                                   % calculate time frequency responses
 
