@@ -17,6 +17,7 @@
 dyads                     = 14;                                             % number of dyads to be included in the averaging
 trial                     = 'all';                                          % use all trials of the selected dyads
 components                = [2, 3, 5, 6];                                   % plot the TFRs for the motor components
+freq_range                = [1 30];                                         % plot all frequency components from 1 to 30 Hz
 condition                 = 1;                                              % 1 = CF, 2 = CU, 3 = UF, 4 = UU
 tempPowSpctrm             = 0;                                              % temporary variable for the averaging
 
@@ -108,7 +109,7 @@ for dyad=1:1:dyads
 end
 
 tmp.powspctrm = tempPowSpctrm/dyads;                                        % calculate the average value
-DualPiano_singleplotTFR(tmp, trial, components);                            % plot the results
+DualPiano_singleplotTFR(tmp, trial, components, freq_range);                % plot the results
 
 disp('data processing accomplished!');                                      % note the end of the process
 
@@ -119,7 +120,18 @@ text(-0.65, 1.15, subplot_title, 'units', 'normalized', 'FontSize', 13, ... % se
 data_processed = tmp;                                                       % keep the result in workspace
 
 % -------------------------------------------------------------------------
+% Save graphic as pdf-File
+% -------------------------------------------------------------------------
+h=gcf;
+set(h, 'PaperOrientation','landscape');
+set(h, 'PaperType','a3');
+set(h, 'PaperUnit', 'centimeters');
+set(h, 'PaperSize', [42 29.7]);
+set(h, 'unit', 'normalized', 'Position', [0 0 1 0.9]);
+print(gcf, '-dpdf', '../../results/DualPiano_analysis/output.pdf');
+
+% -------------------------------------------------------------------------
 % Clear temporary variables in workspace
 % -------------------------------------------------------------------------
 clear tmp dyads dyad trial components condition tempPowSpctrm data ...
-  subplot_title
+  subplot_title data_CF data_CU data_UU data_UF h freq_range

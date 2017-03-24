@@ -8,6 +8,7 @@ function DualPiano_singleplotTFR(data_in, varargin)
 % Varargin:
 %   trial           number of one specific trial or 'all'
 %   components      1xN vector specifying the components (N_max = 4);
+%   freq_range      1xN vector specifying the limits of the freq. axis
 %
 % This function requires the fieldtrip toolbox
 %
@@ -22,14 +23,17 @@ warning('on','all');
 % -------------------------------------------------------------------------
 switch length(varargin)
   case 0
-    components = [2, 3, 5, 6];                                               % default components 'run11_pl1', 'run14_pl2' 'run14_pl1'and 'run11_pl2'
-    trial = 'all';                                                           % average over all trials           
+    freq_range    = [1 30];                                                 % plot all frequency components from 1 to 30 Hz
+    components    = [2, 3, 5, 6];                                           % default components 'run11_pl1', 'run14_pl2' 'run14_pl1'and 'run11_pl2'
+    trial         = 'all';                                                  % average over all trials
   case 1
-    components = [2, 3, 5, 6];                                               
-    trial = varargin{1}; 
+    freq_range    = [1 30];                                                 
+    components    = [2, 3, 5, 6];                                               
+    trial         = varargin{1}; 
   otherwise
-    components = varargin{2};
-    trial = varargin{1};
+    freq_range    = varargin{3};
+    components    = varargin{2};
+    trial         = varargin{1};
 end
 
 nmbcmp = length(components);                                                % get the the number of components
@@ -55,7 +59,8 @@ end
 % -------------------------------------------------------------------------
 cfg                 = [];                                                       
 cfg.maskstyle       = 'saturation';
-cfg.xlim            = [0.5 10.5];                                                   
+cfg.xlim            = [0.5 10.5];
+cfg.ylim            = freq_range;
 cfg.zlim            = 'maxmin';
 cfg.trials          = trial;                                                % select trial (or 'all' trials)
 cfg.feedback        = 'no';                                                 % suppress feedback output

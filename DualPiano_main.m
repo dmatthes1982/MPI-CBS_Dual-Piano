@@ -245,6 +245,17 @@ data_processed.PLVmean          = PLVmean;
 data_processed.PLVepDyads       = PLVepDyads;
 
 % -------------------------------------------------------------------------
+% Save graphic as pdf-File
+% -------------------------------------------------------------------------
+h=gcf;                                                                      
+set(h, 'PaperOrientation','landscape');
+set(h, 'PaperType','a3');
+set(h, 'PaperUnit', 'centimeters');
+set(h, 'PaperSize', [42 29.7]);
+set(h, 'unit', 'normalized', 'Position', [0 0 1 0.9]);
+print(gcf, '-dpdf', '../../results/DualPiano_analysis/output.pdf');
+
+% -------------------------------------------------------------------------
 % Clear temporary variables in workspace
 % Release figure
 % -------------------------------------------------------------------------
