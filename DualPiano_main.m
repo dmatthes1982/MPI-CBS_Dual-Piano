@@ -26,7 +26,9 @@ load('../../Dual_PIANO_data/Components_epoched/P3comb_condSpec.mat');
 
 Fs                        = data_CF.fsample;                                % sampling rate
 freqLow                   = 9;                                              % lower bandpass frequency
-freqHigh                  = 11;                                             % upper bandpass frequency  
+freqHigh                  = 11;                                             % upper bandpass frequency 
+subplot_title             = sprintf(['Phase Locking Values - Passband:' ...
+                                     ' %d Hz - %d Hz'], freqLow, freqHigh);      
 dyads                     = 14;                                             % number of different dyads
 connections               = 2;                                              % number of connections to be investigated
 labelcmp                  = {'run11_pl1', 'run14_pl2'; 'run14_pl1', ...     % labels to be compared
@@ -226,6 +228,10 @@ for condition=1:1:4
   DualPiano_fancyPLVPlot(cfgPlot, PLVepDyads{2,1}(condition,:));
 end
 
+subplot(2,4,3);
+text(-0.95, 1.15, subplot_title, 'units', 'normalized', 'FontSize', 13, ...  % set title for the whole graphic
+  'FontWeight', 'bold');
+
 disp('data processing accomplished!');                                      % note the end of the process
 
 data_processed.fsample          = Fs;                                       % put all relevant intermediate results to an output data structure
@@ -247,5 +253,5 @@ clear ans i cfgPLV Fs freqLow freqHigh motorRightPlayerOne ...
   FirstStart FirstStop pauseStart pauseStop SecondStart SecondStop time ...
   nmbrProb marker componentA componentB condition connections data dyad ...
   data_PLV PLVep labelcmp dyads PLVs PLVmean data_CF data_CU data_UF ...
-  data_UU PLVepDyads cfgPlot
+  data_UU PLVepDyads cfgPlot subplot_title
 figure(1); hold off;

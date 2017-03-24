@@ -86,15 +86,19 @@ for dyad=1:1:dyads
     case 1
       data = data_CF;
       disp('    condition CONGRUENT/FAMILIAR');
+      subplot_title = 'Time Frequency Response for Condition CF';
     case 2
       data = data_CU;
       disp('    condition CONGRUENT/UNFAMILIAR');
+      subplot_title = 'Time Frequency Response for Condition CU';
     case 3
       data = data_UF;
       disp('    condition INCONGRUENT/FAMILIAR');
+      subplot_title = 'Time Frequency Response for Condition UF';
     case 4
       data = data_UU;
       disp('    condition INCONGRUENT/UNFAMILIAR');
+      subplot_title = 'Time Frequency Response for Condition UU';
     otherwise
         error('unknown condition');
   end
@@ -108,9 +112,14 @@ DualPiano_singleplotTFR(tmp, trial, components);                            % pl
 
 disp('data processing accomplished!');                                      % note the end of the process
 
+subplot(2,2,2);
+text(-0.65, 1.15, subplot_title, 'units', 'normalized', 'FontSize', 13, ... % set title for the whole graphic
+  'FontWeight', 'bold');
+
 data_processed = tmp;                                                       % keep the result in workspace
 
 % -------------------------------------------------------------------------
 % Clear temporary variables in workspace
 % -------------------------------------------------------------------------
-clear tmp dyads dyad trial components condition tempPowSpctrm data
+clear tmp dyads dyad trial components condition tempPowSpctrm data ...
+  subplot_title
