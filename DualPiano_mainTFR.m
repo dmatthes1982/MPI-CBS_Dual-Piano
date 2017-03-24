@@ -1,11 +1,24 @@
+% DUALPIANO_MAINTFR
+%
+% This script estimates and illustrates the time frequency response of the
+% four motor components (run11_pl1, run14_pl1, run11_pl2 and run14_pl2) for
+% a specific conditon (CF, CU, UF or UU) and averaged across all dyads.
+% The result possibly leads to appropriate frequency ranges for a
+% subsequent investigation of phase locking.
+%
+% This script requires the fieldtrip toolbox.
+
+% Copyright (C) 2017, Daniel Matthes, MPI CBS
+
+
 % -------------------------------------------------------------------------
 % General definitions
 % -------------------------------------------------------------------------
-dyads                     = 14;
-trial                     = 'all';
-components                = [2, 3, 5, 6];
-condition                 = 1;
-tempPowSpctrm             = 0;
+dyads                     = 14;                                             % number of dyads to be included in the averaging
+trial                     = 'all';                                          % use all trials of the selected dyads
+components                = [2, 3, 5, 6];                                   % plot the TFRs for the motor components
+condition                 = 1;                                              % 1 = CF, 2 = CU, 3 = UF, 4 = UU
+tempPowSpctrm             = 0;                                              % temporary variable for the averaging
 
 for dyad=1:1:dyads
   switch dyad                                                               % load the appropriate data
@@ -69,7 +82,7 @@ for dyad=1:1:dyads
       error('number of cases and value of dyads does not match');
   end
   
-  switch condition                                                           % select condition
+  switch condition                                                           % select the desired dataset
     case 1
       data = data_CF;
       disp('    condition CONGRUENT/FAMILIAR');
@@ -86,22 +99,18 @@ for dyad=1:1:dyads
         error('unknown condition');
   end
   
-  tmp = DualPiano_freqanalysis(data);
-  tempPowSpctrm = tempPowSpctrm + tmp.powspctrm;  
+  tmp = DualPiano_freqanalysis(data);                                       % calculate the spectrum for the loaded data 
+  tempPowSpctrm = tempPowSpctrm + tmp.powspctrm;                            % add the result to the previous one
 end
 
-tmp.powspctrm = tempPowSpctrm/dyads;
-DualPiano_singleplotTFR(tmp, trial, components);
+tmp.powspctrm = tempPowSpctrm/dyads;                                        % calculate the average value
+DualPiano_singleplotTFR(tmp, trial, components);                            % plot the results
 
 disp('data processing accomplished!');                                      % note the end of the process
 
-data_processed = tmp;
+data_processed = tmp;                                                       % keep the result in workspace
 
 % -------------------------------------------------------------------------
 % Clear temporary variables in workspace
-% Release figure
 % -------------------------------------------------------------------------
 clear tmp dyads dyad trial components condition tempPowSpctrm data
-
-hold off;
-
