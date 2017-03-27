@@ -25,8 +25,8 @@ clear data_CF data_CU data_UF data_UU
 load('../../Dual_PIANO_data/Components_epoched/P3comb_condSpec.mat');
 
 Fs                        = data_CF.fsample;                                % sampling rate
-freqLow                   = 9;                                              % lower bandpass frequency
-freqHigh                  = 11;                                             % upper bandpass frequency 
+freqLow                   = 17;                                              % lower bandpass frequency
+freqHigh                  = 19;                                             % upper bandpass frequency 
 subplot_title             = sprintf(['Phase Locking Values - Passband:' ...
                                      ' %d Hz - %d Hz'], freqLow, freqHigh);      
 dyads                     = 14;                                             % number of different dyads
@@ -208,7 +208,11 @@ for dyad=1:1:dyads
   end % for condition
 end % for dyad
 
-PLVepDyads{1,1} = 0;                                                        % Calculate average over all dyads for each pair of condition and connection
+% -------------------------------------------------------------------------
+% Calculate average over all dyads for each pair of condition and
+% connection
+% -------------------------------------------------------------------------
+PLVepDyads{1,1} = 0;                                                        
 PLVepDyads{2,1} = 0;
 
 for dyad=1:1:dyads
@@ -228,13 +232,38 @@ for condition=1:1:4
   DualPiano_fancyPLVPlot(cfgPlot, PLVepDyads{2,1}(condition,:));
 end
 
-subplot(2,4,3);
-text(-0.95, 1.15, subplot_title, 'units', 'normalized', 'FontSize', 13, ...  % set title for the whole graphic
-  'FontWeight', 'bold');
-
 disp('data processing accomplished!');                                      % note the end of the process
 
-data_processed.fsample          = Fs;                                       % put all relevant intermediate results to an output data structure
+% -------------------------------------------------------------------------
+% Resize y-axis subplots to common base
+% Set title for the whole graphic
+% -------------------------------------------------------------------------
+y_min = 1;                                                                 
+y_max = 0;
+for sub=1:1:8
+  subplot(2,4,sub);
+  y_limits = get(gca,'ylim');
+  if y_limits(1) < y_min
+    y_min = y_limits(1);
+  end
+  if y_limits(2) > y_max
+    y_max = y_limits(2);
+  end
+end
+
+for sub=1:1:8
+  subplot(2,4,sub);
+  ylim([y_min y_max]);
+end
+
+subplot(2,4,3);
+text(-0.95, 1.15, subplot_title, 'units', 'normalized', 'FontSize', 13, ...  
+  'FontWeight', 'bold');
+
+% -------------------------------------------------------------------------
+% Put all relevant intermediate results to an output data structure
+% -------------------------------------------------------------------------
+data_processed.fsample          = Fs;                                       
 data_processed.time             = time;
 data_processed.connections      = connections;                              
 data_processed.dyads            = dyads;
@@ -264,5 +293,5 @@ clear ans i cfgPLV Fs freqLow freqHigh motorRightPlayerOne ...
   FirstStart FirstStop pauseStart pauseStop SecondStart SecondStop time ...
   nmbrProb marker componentA componentB condition connections data dyad ...
   data_PLV PLVep labelcmp dyads PLVs PLVmean data_CF data_CU data_UF ...
-  data_UU PLVepDyads cfgPlot subplot_title
+  data_UU PLVepDyads cfgPlot subplot_title y_limits y_max y_min
 figure(1); hold off;
