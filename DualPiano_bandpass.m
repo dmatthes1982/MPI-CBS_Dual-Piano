@@ -25,7 +25,7 @@ cfg.bpfilter        = 'yes';
 cfg.bpfilttype      = 'fir';                                                % use a simple fir
 cfg.bpfreq          = [lowfreq highfreq];                                   % define bandwith
 cfg.bpfiltord       = fix(90/(highfreq - lowfreq));                         % filter order depends on the bandwith
-cfg.feedback        = 'no';                                               % suppress feedback output
+cfg.feedback        = 'no';                                                 % suppress feedback output
 cfg.showcallinfo    = 'no';                                                 % suppress function call output
 
 data_out = ft_preprocessing(cfg, data_in);                                  % process data
