@@ -1,4 +1,5 @@
-function [ data_out ] = DualPiano_bandpass( data_in, lowfreq, highfreq )
+function [ data_out ] = DualPiano_bandpass( data_in, lowfreq, highfreq, ...
+  fixorder )
 % DUALPIANO_BANDPASS applies a specific bandpass filter to every channel in
 % the data_in structure
 %
@@ -6,6 +7,7 @@ function [ data_out ] = DualPiano_bandpass( data_in, lowfreq, highfreq )
 %   data_in         fieldtrip data structure
 %   lfreq           lower cutoff frequency
 %   hfreq           higher cutoff frequency
+%   fixorder        use bandpass with fixed coefficient order (true/false)
 %
 % Output:
 %   data_out        fieldtrip data structure
@@ -24,9 +26,12 @@ cfg.channel         = 'all';                                                % ap
 cfg.bpfilter        = 'yes';
 cfg.bpfilttype      = 'fir';                                                % use a simple fir
 cfg.bpfreq          = [lowfreq highfreq];                                   % define bandwith
-cfg.bpfiltord       = fix(90/(highfreq - lowfreq));                         % filter order depends on the bandwith
 cfg.feedback        = 'no';                                                 % suppress feedback output
 cfg.showcallinfo    = 'no';                                                 % suppress function call output
+
+if fixorder == true
+  cfg.bpfiltord       = fix(90/(highfreq - lowfreq));                       % filter order depends on the bandwith
+end
 
 data_out = ft_preprocessing(cfg, data_in);                                  % process data
 

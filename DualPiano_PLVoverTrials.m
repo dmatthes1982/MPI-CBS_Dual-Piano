@@ -72,7 +72,7 @@ end
 % -------------------------------------------------------------------------
 % Estimate phase differences
 % -------------------------------------------------------------------------
-data_filt = DualPiano_bandpass( data_in, cfg.lfreq, cfg.hfreq );            % extract the desired passband 
+data_filt = DualPiano_bandpass( data_in, cfg.lfreq, cfg.hfreq, true );      % extract the desired passband 
 data_hilbert = DualPiano_hilbert( data_filt, 'angle');                      % estimate the hilbert phases
 
 % -------------------------------------------------------------------------

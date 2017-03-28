@@ -30,7 +30,7 @@ if ~zerop
   Y = fft( signal.*window );                                                % FFT without zero padding
 
   P2 = abs(Y/L);
-  P1 = P2(1:L/2+1);
+  P1 = P2(1:floor(L/2)+1);
   P1(2:end-1) = 2*P1(2:end-1);                                              % one-side amplidute spectrum
 
   f = Fs*(0:(L/2))/L;                                                       % frequency vector
