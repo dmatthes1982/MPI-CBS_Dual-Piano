@@ -1,5 +1,5 @@
 function [ data_out ] = DualPiano_extractSigSeg( data_in, segment )
-%DUALPIANO_EXTRACTSIGSEG extracts a predefined segment of a trial
+% DUALPIANO_EXTRACTSIGSEG extracts a predefined segment of a trial
 %
 % Params:
 %   data_in         NxM array of eeg signal, where N is

@@ -9,6 +9,8 @@ function DualPiano_singleplotTFR(data_in, varargin)
 %   trial           number of one specific trial or 'all'
 %   components      1xN vector specifying the components (N_max = 4);
 %   freq_range      1xN vector specifying the limits of the freq. axis
+%   panel           specifies the panel of a figure in which is plotted. If
+%                   panel == 0, no panels are used.
 %
 % This function requires the fieldtrip toolbox
 %
@@ -23,14 +25,27 @@ warning('on','all');
 % -------------------------------------------------------------------------
 switch length(varargin)
   case 0
+    panel         = 0;                                                      % figure is not divided into panels
     freq_range    = [1 30];                                                 % plot all frequency components from 1 to 30 Hz
     components    = [2, 3, 5, 6];                                           % default components 'run11_pl1', 'run14_pl2' 'run14_pl1'and 'run11_pl2'
     trial         = 'all';                                                  % average over all trials
   case 1
+    panel         = 0;
     freq_range    = [1 30];                                                 
     components    = [2, 3, 5, 6];                                               
     trial         = varargin{1}; 
+  case 2
+    panel         = 0;
+    freq_range    = [1 30];
+    components    = varargin{2};
+    trial         = varargin{1};
+  case 3
+    panel         = 0;
+    freq_range    = varargin{3};
+    components    = varargin{2};
+    trial         = varargin{1};
   otherwise
+    panel         = varargin{4};
     freq_range    = varargin{3};
     components    = varargin{2};
     trial         = varargin{1};
@@ -66,12 +81,16 @@ cfg.trials          = trial;                                                % se
 cfg.feedback        = 'no';                                                 % suppress feedback output
 cfg.showcallinfo    = 'no';                                                 % suppress function call output
 
-figure
+% figure
 colormap jet;                                                               % use the older and more common colormap
 
 for i=1:1:nmbcmp
     cfg.channel = components(i);
-    subplot(row,column,i);
+    if panel == 0
+      subplot(row,column,i);
+    else
+      subplot(row,column,i,'Parent', panel);
+    end
     tlabel = data_in.label(cfg.channel);                                    % get label of component
     tlabel = strrep(tlabel, '_', '\_');                                     % mask underscores
     ft_singleplotTFR(cfg, data_in);                                         % plot the time frequency responses

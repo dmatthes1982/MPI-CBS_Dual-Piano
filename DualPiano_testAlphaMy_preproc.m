@@ -16,3 +16,8 @@ data_CF_avSeg = DualPiano_extractSigSeg(data_CF_av, 2);
 data_CU_avSeg = DualPiano_extractSigSeg(data_CU_av, 2);
 data_UF_avSeg = DualPiano_extractSigSeg(data_UF_av, 2);
 data_UU_avSeg = DualPiano_extractSigSeg(data_UU_av, 2);
+
+data_CF_freq = DualPiano_freqanalysis(data_CF);
+data_CU_freq = DualPiano_freqanalysis(data_CU);
+data_UF_freq = DualPiano_freqanalysis(data_UF);
+data_UU_freq = DualPiano_freqanalysis(data_UU);

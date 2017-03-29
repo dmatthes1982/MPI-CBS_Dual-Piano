@@ -1,26 +1,57 @@
-function DualPiano_fftCommon( signal, zerop )
+function DualPiano_fftCommon( signal, zerop, varargin )
 % DUALPIANO_FFTCOMMON compares the zero padded and the non padded fourier
 % transformation of a signal
 %
 % Params:
 %   signal         time response
 %   zerop          use zeropadding
+%
+% Varargin:
+%   panel           specifies the panel of a figure in which is plotted. If
+%                   panel == 0, no panels are used.
+%   timeOffset      offset for the time axis in figure one
+%   Fs              sampling frequency
 
 % Copyright (C) 2017, Daniel Matthes, MPI CBS
 
 % -------------------------------------------------------------------------
+% Check input
+% -------------------------------------------------------------------------
+switch length(varargin)
+  case 0
+    Fs            = 128;                                                    % sampling frequency                    
+    timeOffset    = 0;                                                      % no Offset for the time axis is given
+    panel         = 0;                                                      % figure is not divided into panels
+  case 1
+    Fs            = 128;
+    timeOffset    = 0;
+    panel         = varargin{1};
+  case 2
+    Fs            = 128;
+    timeOffset    = varargin{2};
+    panel         = varargin{1};
+  otherwise
+    Fs            = varargin{3};
+    timeOffset    = varargin{2};
+    panel         = varargin{1};
+end
+
+% -------------------------------------------------------------------------
 % Plot signal
 % -------------------------------------------------------------------------
-Fs = 128;                                                                   % sampling frequency                    
 L = size(signal, 2);                                                        % length of signal
-time = 0:1/128:(L-1)/128;                                                   % generate time vector
+time = timeOffset:1/Fs:(timeOffset+(L-1)/Fs);                               % generate time vector
 % window = hanning(L).';                                                    % apply window function
 window = ones(1,L);
 
-subplot(2,1,1);
+if panel == 0
+  subplot(2,1,1);
+else
+  subplot(2,1,1, 'Parent', panel);
+end
 plot(time, signal.*window);
 title('Signal X(t)');
-xlabel('t in s)');
+xlabel('t in sec');
 ylabel('V in ?V');
 
 % -------------------------------------------------------------------------
@@ -35,7 +66,11 @@ if ~zerop
 
   f = Fs*(0:(L/2))/L;                                                       % frequency vector
   
-  subplot(2,1,2);
+  if panel == 0
+    subplot(2,1,2);
+  else
+    subplot(2,1,2, 'Parent', panel);
+  end
   plot(f,P1);                                                               % plot spectrum
   title('Single-Sided Amplitude Spectrum of X(t)');
   xlabel('f in Hz');
@@ -55,7 +90,11 @@ else
 
   f = Fs*(0:(L/2))/L;                                                       % frequency vector
 
-  subplot(2,1,2);
+  if panel == 0
+    subplot(2,1,2);
+  else
+    subplot(2,1,2, 'Parent', panel);
+  end
   plot(f, Q1);                                                              % plot spectrum
   title('Single-Sided Amplitude Spectrum of X(t)');
   xlabel('f (Hz)');
