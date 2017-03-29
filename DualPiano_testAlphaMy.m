@@ -12,7 +12,7 @@ data_CU_av = DualPiano_meanOverTrials(data_CU);
 data_UF_av = DualPiano_meanOverTrials(data_UF);
 data_UU_av = DualPiano_meanOverTrials(data_UU);
 
-data_CF_avSeg = DualPiano_extractSigSeg(data_CF_av, 3);
-data_CU_avSeg = DualPiano_extractSigSeg(data_CU_av, 3);
-data_UF_avSeg = DualPiano_extractSigSeg(data_UF_av, 3);
-data_UU_avSeg = DualPiano_extractSigSeg(data_UU_av, 3);
+data_CF_avSeg = DualPiano_extractSigSeg(data_CF_av, 2);
+data_CU_avSeg = DualPiano_extractSigSeg(data_CU_av, 2);
+data_UF_avSeg = DualPiano_extractSigSeg(data_UF_av, 2);
+data_UU_avSeg = DualPiano_extractSigSeg(data_UU_av, 2);
