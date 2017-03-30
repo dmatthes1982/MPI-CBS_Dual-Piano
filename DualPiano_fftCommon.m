@@ -52,7 +52,7 @@ end
 plot(time, signal.*window);
 title('Signal X(t)');
 xlabel('t in sec');
-ylabel('V in ?V');
+ylabel('V in \muV');
 
 % -------------------------------------------------------------------------
 % Estimate the FFT without zero padding

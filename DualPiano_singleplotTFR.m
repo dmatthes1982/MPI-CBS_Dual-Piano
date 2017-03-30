@@ -18,7 +18,7 @@ function DualPiano_singleplotTFR(data_in, varargin)
 
 % Copyright (C) 2017, Daniel Matthes, MPI CBS
 
-warning('on','all');
+warning('off','all');
 
 % -------------------------------------------------------------------------
 % Check input
@@ -99,6 +99,6 @@ for i=1:1:nmbcmp
     ylabel('frequency in Hz');                                              % set ylabel
 end
 
-warning('off','all');
+warning('on','all');
 
 end
