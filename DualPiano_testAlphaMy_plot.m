@@ -68,9 +68,10 @@ r.FontSize = 12;
 r.FontWeight = 'bold';
 
 % -------------------------------------------------------------------------
-% Plot FFT and TFR
+% Plot PSD and TFR
 % -------------------------------------------------------------------------
-DualPiano_fftCommon(time_data(component, :), 0, p, timeOffset);             % build a 2x1 subplot with time and frequency response
+psd = DualPiano_psdCalc(time_data(component, :), 0);                        % estimate the power spectral density  
+DualPiano_psdPlot(time_data(component, :), psd, p, timeOffset);             % build a 2x1 subplot with time and frequency response
 DualPiano_singleplotTFR(freq_data, 'all', component, [1 30], q);            % plot time-frequency response
 
 % -------------------------------------------------------------------------

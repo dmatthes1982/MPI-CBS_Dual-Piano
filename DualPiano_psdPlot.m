@@ -1,10 +1,10 @@
-function DualPiano_fftCommon( signal, zerop, varargin )
-% DUALPIANO_FFTCOMMON compares the zero padded and the non padded fourier
-% transformation of a signal
+function DualPiano_psdPlot( signal, psd, varargin )
+% DUALPIANO_PSDPLOT
+%
 %
 % Params:
-%   signal         time response
-%   zerop          use zeropadding
+%   signal          time response
+%   psd             power spectral densitiy
 %
 % Varargin:
 %   panel           specifies the panel of a figure in which is plotted. If
@@ -55,51 +55,17 @@ xlabel('t in sec');
 ylabel('V in \muV');
 
 % -------------------------------------------------------------------------
-% Estimate the FFT without zero padding
+% Plot PSD
 % -------------------------------------------------------------------------
-if ~zerop
-  Y = fft( signal.*window );                                                % FFT without zero padding
+f = Fs*(0:(L/2))/L;                                                         % frequency vector
 
-  P2 = abs(Y/L);
-  P1 = P2(1:floor(L/2)+1);
-  P1(2:end-1) = 2*P1(2:end-1);                                              % one-side amplidute spectrum
-
-  f = Fs*(0:(L/2))/L;                                                       % frequency vector
-  
-  if panel == 0
-    subplot(2,1,2);
-  else
-    subplot(2,1,2, 'Parent', panel);
-  end
-  plot(f,P1);                                                               % plot spectrum
-  title('Single-Sided Amplitude Spectrum of X(t)');
-  xlabel('f in Hz');
-  ylabel('|P1(f)|');
-
-% -------------------------------------------------------------------------
-% Estimate the FFT including zero padding
-% -------------------------------------------------------------------------
-else  
-  L = 2048;                                                                 % length of signal
-
-  Z = fft( signal,  2048);                                                  % FFT including zero padding
-
-  Q2 = abs(Z/L);
-  Q1 = Q2(1:L/2+1);
-  Q1(2:end-1) = 2*Q1(2:end-1);                                              % one-side amplidute spectrum
-
-  f = Fs*(0:(L/2))/L;                                                       % frequency vector
-
-  if panel == 0
-    subplot(2,1,2);
-  else
-    subplot(2,1,2, 'Parent', panel);
-  end
-  plot(f, Q1);                                                              % plot spectrum
-  title('Single-Sided Amplitude Spectrum of X(t)');
-  xlabel('f (Hz)');
-  ylabel('|P1(f)|');
+if panel == 0
+  subplot(2,1,2);
+else
+  subplot(2,1,2, 'Parent', panel);
 end
-
-end
+plot(f,10*log10(psd));                                                        % plot spectrum in dB
+title('Single-Sided Amplitude Spectrum of X(t)');
+xlabel('frequency (Hz)');
+ylabel('power/frequency (dB/Hz)');
 
