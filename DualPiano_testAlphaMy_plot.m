@@ -1,11 +1,12 @@
-function DualPiano_testAlphaMy_plot( time_data, freq_data, component, ...
-  varargin )
+function DualPiano_testAlphaMy_plot( time_data, psd_data, tfr_data, ...
+  component, varargin )
 % DUALPIANO_TESTALPHAMY_PLOT generates a graphic consisting of multiple
 % panels including different representations of a choosen component.
 %
 % Params:
 %   time_data     NxM matrix with N components of a length of M timepoints
-%   freq_data     fieldtrip data structure including freq data
+%   psd_data      fieldtrip data structure including PSD data
+%   tfr_data      fieldtrip data structure including TFR data
 %   component     number of the specific component
 %   
 % Varargin:
@@ -41,19 +42,23 @@ r = uipanel('Parent', f, 'BackgroundColor', 'white', 'BorderType', ...      % cr
 % -------------------------------------------------------------------------
 % Build headline of the figure
 % -------------------------------------------------------------------------
-dyad = freq_data.Mat_cond_pair(1,2);
+dyad = tfr_data.Mat_cond_pair(1,2);
 
-if (component == 2 || component == 3)
+if (component < 4)
   player = 1;
-elseif (component == 5 || component == 6)
+elseif (component > 3)
   player = 2;
 end
 
 switch component
+  case 1
+    comp_text = 'N100';
   case 2
     comp_text = 'motor right';
   case 3
     comp_text = 'motor left';
+  case 4
+    comp_text = 'N100';
   case 5
     comp_text = 'motor right';
   case 6
@@ -70,9 +75,9 @@ r.FontWeight = 'bold';
 % -------------------------------------------------------------------------
 % Plot PSD and TFR
 % -------------------------------------------------------------------------
-psd = DualPiano_psdCalc(time_data(component, :), 0);                        % estimate the power spectral density  
-DualPiano_psdPlot(time_data(component, :), psd, p, timeOffset);             % build a 2x1 subplot with time and frequency response
-DualPiano_singleplotTFR(freq_data, 'all', component, [1 30], q);            % plot time-frequency response
+DualPiano_psdPlot(time_data(component, :), psd_data.powspctrm( ...
+  component, :), p, timeOffset);                                            % build a 2x1 subplot with time and frequency response
+DualPiano_singleplotTFR(tfr_data, 'all', component, [1 30], q);             % plot time-frequency response
 
 % -------------------------------------------------------------------------
 % Save graphic as pdf-File

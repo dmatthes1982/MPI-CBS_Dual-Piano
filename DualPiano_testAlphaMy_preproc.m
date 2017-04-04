@@ -24,25 +24,6 @@
 % warning('on','all'); 
 
 % -------------------------------------------------------------------------
-% In this part the mean over all trials for every condition is calculated
-% -------------------------------------------------------------------------
-data_CF_av = DualPiano_meanOverTrials(data_CF);
-data_CU_av = DualPiano_meanOverTrials(data_CU);
-data_UF_av = DualPiano_meanOverTrials(data_UF);
-data_UU_av = DualPiano_meanOverTrials(data_UU);
-
-% -------------------------------------------------------------------------
-% In this part the averaged trials are trimmed
-% 1: phrase 1 - second 0 to 4
-% 2: pause - second 4 to 8
-% 3: phrase 2 - second 8 to 11
-% -------------------------------------------------------------------------
-data_CF_avSeg = DualPiano_extractSigSeg(data_CF_av, 2);
-data_CU_avSeg = DualPiano_extractSigSeg(data_CU_av, 2);
-data_UF_avSeg = DualPiano_extractSigSeg(data_UF_av, 2);
-data_UU_avSeg = DualPiano_extractSigSeg(data_UU_av, 2);
-
-% -------------------------------------------------------------------------
 % This part calculates time-frequency data for every component in every
 % condition averaged over all trials
 % -------------------------------------------------------------------------
@@ -52,9 +33,47 @@ data_UF_freq = DualPiano_freqanalysis(data_UF);
 data_UU_freq = DualPiano_freqanalysis(data_UU);
 
 % -------------------------------------------------------------------------
+% In this part the trials and time vectors are trimmed to the desired
+% window
+% 1: phrase 1 - second 0 to 4
+% 2: pause - second 4 to 8
+% 3: phrase 2 - second 8 to 11
+% -------------------------------------------------------------------------
+for i=1:1:48
+  data_CF.trial{i} = DualPiano_extractSigSeg(data_CF.trial{i}, 2);
+  data_CU.trial{i} = DualPiano_extractSigSeg(data_CU.trial{i}, 2);
+  data_UF.trial{i} = DualPiano_extractSigSeg(data_UF.trial{i}, 2);
+  data_UU.trial{i} = DualPiano_extractSigSeg(data_UU.trial{i}, 2);
+
+  data_CF.time{i} = DualPiano_extractSigSeg(data_CF.time{i}, 2);
+  data_CU.time{i} = DualPiano_extractSigSeg(data_CU.time{i}, 2);
+  data_UF.time{i} = DualPiano_extractSigSeg(data_UF.time{i}, 2);
+  data_UU.time{i} = DualPiano_extractSigSeg(data_UU.time{i}, 2);
+end
+
+% -------------------------------------------------------------------------
+% This part calculates power spectral destiny for every component in every
+% condition averaged over all trials
+% -------------------------------------------------------------------------
+data_CF_psd = DualPiano_psdanalysis(data_CF);
+data_CU_psd = DualPiano_psdanalysis(data_CU);
+data_UF_psd = DualPiano_psdanalysis(data_UF);
+data_UU_psd = DualPiano_psdanalysis(data_UU);
+
+% -------------------------------------------------------------------------
+% In this part the mean over all trials for every condition is calculated
+% -------------------------------------------------------------------------
+data_CF_av = DualPiano_meanOverTrials(data_CF);
+data_CU_av = DualPiano_meanOverTrials(data_CU);
+data_UF_av = DualPiano_meanOverTrials(data_UF);
+data_UU_av = DualPiano_meanOverTrials(data_UU);
+
+% -------------------------------------------------------------------------
 % Propagation of the Mat_cond_pair matrix
 % -------------------------------------------------------------------------
 data_CF_freq.Mat_cond_pair = data_CF.Mat_cond_pair;
 data_CU_freq.Mat_cond_pair = data_CU.Mat_cond_pair;
 data_UF_freq.Mat_cond_pair = data_UF.Mat_cond_pair;
 data_UU_freq.Mat_cond_pair = data_UU.Mat_cond_pair;
+
+clear i;

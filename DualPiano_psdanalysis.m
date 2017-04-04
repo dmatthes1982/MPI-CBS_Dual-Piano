@@ -1,9 +1,8 @@
-function [ data_out ] = DualPiano_freqanalysis(data_in)
-% DUALPIANO_FREQANALYSIS performs a time frequency analysis with the 
-% following settings:
-%   freq range:       1...30 Hz
-%   freq resolution:  1 Hz
-%   time of interest: each sample
+function [ data_out ] = DualPiano_psdanalysis( data_in )
+% DUALPIANO_PSDANALYSIS estimates the power spectral destiny with
+% the following settings:
+%   freq range:       0 ... Fs/2 Hz
+%   freq resolution:  Fs / L Hz
 %
 % Params:
 %   data_in         fieldtrip data structure
@@ -20,16 +19,14 @@ function [ data_out ] = DualPiano_freqanalysis(data_in)
 warning('off','all');
 
 cfg                 = [];
-cfg.method          = 'mtmconvol';
+cfg.method          = 'mtmfft';
 cfg.output          = 'pow';
 cfg.channel         = 'all';                                                % calculate spectrum of every channel  
 cfg.trials          = 'all';                                                % calculate spectrum for every trial  
-cfg.keeptrials      = 'yes';                                                % do not average over trials
-cfg.pad             = 'nextpow2';                                           % use fast calculation method
+cfg.keeptrials      = 'no';                                                 % average over trials
+cfg.pad             = 'maxperlen';                                          % non padded fft
 cfg.taper           = 'hanning';                                            % hanning taper the segments
-cfg.foi             = 1:1:30;                                               % analysis 1 to 30 Hz in steps of 1 Hz 
-cfg.t_ftimwin       = ones(length(cfg.foi),1).*1;                           % length of time window = 1 sec
-cfg.toi             = 'all';                                                % spectral estimates on each sample
+cfg.foilim          = [0 (data_in.fsample/2 - 1/data_in.fsample)];          % range from zero to Fs/2 
 cfg.feedback        = 'no';                                                 % suppress feedback output
 cfg.showcallinfo    = 'no';                                                 % suppress function call output
 

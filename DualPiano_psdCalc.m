@@ -49,7 +49,7 @@ else
   Y = fft( signal.*window,  2048);                                          % FFT including zero padding
   Y1 = Y(1:floor(L/2)+1);                                                   % one-side spectrum
   
-  psd = (1/(Fs*L)) * abs(Y1).^2;                                            % calculate absolute power (psd)
+  psd = (1/(Fs*L)) * (abs(Y1).^2);                                          % calculate absolute power (psd)
   psd(2:end-1) = 2*psd(2:end-1);                                              
 end
 
