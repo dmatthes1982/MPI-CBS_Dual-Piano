@@ -16,6 +16,9 @@ function [ data_out ] = DualPiano_psdanalysis( data_in )
 
 % Copyright (C) 2017, Daniel Matthes, MPI CBS
 
+Fs = data_in.fsample;
+L = length(data_in.time{1});
+
 warning('off','all');
 
 cfg                 = [];
@@ -26,11 +29,11 @@ cfg.trials          = 'all';                                                % ca
 cfg.keeptrials      = 'no';                                                 % average over trials
 cfg.pad             = 'maxperlen';                                          % non padded fft
 cfg.taper           = 'hanning';                                            % hanning taper the segments
-cfg.foilim          = [0 (data_in.fsample/2 - 1/data_in.fsample)];          % range from zero to Fs/2 
+cfg.foi             = 0:Fs/L:Fs/2;                                          % range from zero to Fs/2 
 cfg.feedback        = 'no';                                                 % suppress feedback output
 cfg.showcallinfo    = 'no';                                                 % suppress function call output
 
-data_out = ft_freqanalysis(cfg, data_in);                                   % calculate time frequency responses
+data_out = ft_freqanalysis(cfg, data_in);                                   % calculate power spectral density
 
 warning('on','all');
 

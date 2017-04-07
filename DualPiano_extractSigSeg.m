@@ -20,7 +20,7 @@ switch segment
   case 2
     data_out = data_in(:,513:1024);
   case 3
-    data_out = data_in(:,1025:1409);
+    data_out = data_in(:,1025:1408);
 end
 
 end
