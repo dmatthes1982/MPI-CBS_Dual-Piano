@@ -31,7 +31,7 @@ end
 % -------------------------------------------------------------------------
 % Create panels for headline and the two different subplots
 % -------------------------------------------------------------------------
-f = figure(5);
+f = figure;
 p = uipanel('Parent', f, 'BackgroundColor', 'white', 'BorderType', ...      % create panel p for the time response and the frequency response
   'none', 'Position', [0 0 0.5 0.95]);
 q = uipanel('Parent', f, 'BackgroundColor', 'white', 'BorderType', ...      % create panel q for the time-frequency response 
