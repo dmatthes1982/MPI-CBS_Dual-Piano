@@ -1,7 +1,7 @@
 function DualPiano_loadData( number )
 %DUALPIANO_LOADDATA 
 
-address = sprintf('../../Dual_PIANO_data/Components_epoched/P%dcomb_condSpec.mat', number);
+address = sprintf('../../data/Dual_PIANO_data/Components_epoched/P%dcomb_condSpec.mat', number);
 load(address);
 
 assignin('base','data_CF', data_CF);
