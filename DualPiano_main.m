@@ -24,7 +24,7 @@ dyads                     = [3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ...
 
 fprintf('processing data of %d different dyads...\n', length(dyads));
 clear data_CF data_CU data_UF data_UU
-load('../../data/Dual_PIANO_data/Components_epoched/P3comb_condSpec.mat');
+load('../../data/DualPiano/Components_epoched/P3comb_condSpec.mat');
 
 Fs                        = data_CF.fsample;                                % sampling rate
 % bandpass templates
@@ -130,56 +130,56 @@ for dyad=dyads                                                              % Fo
       disp('processing data of dyad No. 3...');
     case 5
       clear data_CF data_CU data_UF data_UU
-      load('../../data/Dual_PIANO_data/Components_epoched/P5comb_condSpec.mat');
+      load('../../data/DualPiano/Components_epoched/P5comb_condSpec.mat');
       cfgPlot.background = false;
       disp('processing data of dyad No. 5...');
     case 6
       clear data_CF data_CU data_UF data_UU
-      load('../../data/Dual_PIANO_data/Components_epoched/P6comb_condSpec.mat');
+      load('../../data/DualPiano/Components_epoched/P6comb_condSpec.mat');
       disp('processing data of dyad No. 6...');
     case 7
       clear data_CF data_CU data_UF data_UU
-      load('../../data/Dual_PIANO_data/Components_epoched/P7comb_condSpec.mat');
+      load('../../data/DualPiano/Components_epoched/P7comb_condSpec.mat');
       disp('processing data of dyad No. 7...');
     case 8
       clear data_CF data_CU data_UF data_UU
-      load('../../data/Dual_PIANO_data/Components_epoched/P8comb_condSpec.mat');
+      load('../../data/DualPiano/Components_epoched/P8comb_condSpec.mat');
       disp('processing data of dyad No. 8...');
     case 9
       clear data_CF data_CU data_UF data_UU
-      load('../../data/Dual_PIANO_data/Components_epoched/P9comb_condSpec.mat');
+      load('../../data/DualPiano/Components_epoched/P9comb_condSpec.mat');
       disp('processing data of dyad No. 9...');
     case 10
       clear data_CF data_CU data_UF data_UU
-      load('../../data/Dual_PIANO_data/Components_epoched/P10comb_condSpec.mat');
+      load('../../data/DualPiano/Components_epoched/P10comb_condSpec.mat');
       disp('processing data of dyad No. 10...');
     case 11
       clear data_CF data_CU data_UF data_UU
-      load('../../data/Dual_PIANO_data/Components_epoched/P11comb_condSpec.mat');
+      load('../../data/DualPiano/Components_epoched/P11comb_condSpec.mat');
       disp('processing data of dyad No. 11...');
     case 12
       clear data_CF data_CU data_UF data_UU
-      load('../../data/Dual_PIANO_data/Components_epoched/P12comb_condSpec.mat');
+      load('../../data/DualPiano/Components_epoched/P12comb_condSpec.mat');
       disp('processing data of dyad No. 12...');
     case 13
       clear data_CF data_CU data_UF data_UU
-      load('../../data/Dual_PIANO_data/Components_epoched/P13comb_condSpec.mat');
+      load('../../data/DualPiano/Components_epoched/P13comb_condSpec.mat');
       disp('processing data of dyad No. 13...');
     case 14
       clear data_CF data_CU data_UF data_UU
-      load('../../data/Dual_PIANO_data/Components_epoched/P14comb_condSpec.mat');
+      load('../../data/DualPiano/Components_epoched/P14comb_condSpec.mat');
       disp('processing data of dyad No. 14...');
     case 15
       clear data_CF data_CU data_UF data_UU
-      load('../../data/Dual_PIANO_data/Components_epoched/P15comb_condSpec.mat');
+      load('../../data/DualPiano/Components_epoched/P15comb_condSpec.mat');
       disp('processing data of dyad No. 15...');
     case 16
       clear data_CF data_CU data_UF data_UU
-      load('../../data/Dual_PIANO_data/Components_epoched/P16comb_condSpec.mat');
+      load('../../data/DualPiano/Components_epoched/P16comb_condSpec.mat');
       disp('processing data of dyad No. 16...');
     case 19
       clear data_CF data_CU data_UF data_UU
-      load('../../data/Dual_PIANO_data/Components_epoched/P19comb_condSpec.mat');
+      load('../../data/DualPiano/Components_epoched/P19comb_condSpec.mat');
       disp('processing data of dyad No. 19...');
     otherwise
       error('number of cases and value of dyads does not match');
@@ -319,7 +319,7 @@ set(h, 'PaperUnit', 'centimeters');
 set(h, 'PaperSize', [42 29.7]);
 set(h, 'unit', 'normalized', 'Position', [0 0 0.9 0.9]);
 set(legend1, 'unit', 'normalized', 'Position', [0.925 0.3 0.05 0.45]);      % change position of the legend
-print(gcf, '-dpdf', '../../results/DualPiano_analysis/output.pdf');
+print(gcf, '-dpdf', '../../results/DualPiano/output.pdf');
 
 % -------------------------------------------------------------------------
 % Clear temporary variables in workspace

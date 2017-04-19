@@ -1,4 +1,4 @@
-function DualPiano_testAlphaMy_plot( time_data, psd_data, tfr_data, ...
+function DualPiano_testAlphaMu_plot( time_data, psd_data, tfr_data, ...
   component, varargin )
 % DUALPIANO_TESTALPHAMY_PLOT generates a graphic consisting of multiple
 % panels including different representations of a choosen component.
@@ -88,7 +88,7 @@ set(h, 'PaperType','a3');
 set(h, 'PaperUnit', 'centimeters');
 set(h, 'PaperSize', [42 29.7]);
 set(h, 'unit', 'normalized', 'Position', [0 0 0.9 0.9]);
-print(gcf, '-dpdf', '../../results/DualPiano_analysis/output.pdf');
+print(gcf, '-dpdf', '../../results/DualPiano/output.pdf');
 
 end
 
