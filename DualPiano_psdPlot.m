@@ -65,8 +65,8 @@ if panel == 0
 else
   subplot(2,1,2, 'Parent', panel);
 end
-plot(f,psd);                                                                % plot spectrum in dB
-title('Single-Sided Amplitude Spectrum of X(t)');
+plot(f,psd);                                                                % plot spectrum
+title('Single-Sided Power Spectrum of X(t)');
 xlabel('frequency (Hz)');
 ylabel('power/frequency (dB/Hz)');
 

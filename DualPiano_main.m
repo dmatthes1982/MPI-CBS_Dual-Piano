@@ -40,7 +40,7 @@ freqLimitSpecBeta         = [20, 20; 20, 20; 16, 20; 20, 20; 17, 21; 18,... % dy
                               24; 20, 20; 20, 20; 20, 24];
 freqLimit                 = freqLimitSpecBeta;                              % select one of the four freqLimit specifications
 
-figure_title             = sprintf(['Phase Locking Values - Passband:' ...  % generate title of figure depenting on the choosen passband
+figure_title              = sprintf(['Phase Locking Values - Passband:' ... % generate title of figure depenting on the choosen passband
                                      ' %.1f Hz - %.1f Hz'], ...
                                      min(min(freqLimit)), ...
                                      max(max(freqLimit)));      
