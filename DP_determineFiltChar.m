@@ -1,5 +1,5 @@
-function DualPiano_determineFiltChar(data_in, trial, cmp)
-% DUALPIANO_DETERMINEFILTCHAR illustrates and compares the frequency
+function DP_determineFiltChar(data_in, trial, cmp)
+% DP_DETERMINEFILTCHAR illustrates and compares the frequency
 % response and the output of different bandpass filter
 %
 % Params:

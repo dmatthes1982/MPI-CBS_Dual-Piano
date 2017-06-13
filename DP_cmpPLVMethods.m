@@ -1,6 +1,6 @@
-function [ hilbert_avRatio ] = DualPiano_cmpPLVMethods( data_in, lfreq, ...
+function [ hilbert_avRatio ] = DP_cmpPLVMethods( data_in, lfreq, ...
   hfreq, trial, cmp1, cmp2, winSize )
-% DUALPIANO_CMPPLVMETHODS compares two diffent methods for the phase lock
+% DP_CMPPLVMETHODS compares two diffent methods for the phase lock
 % value (PLV) estimation
 %
 % Params:
@@ -32,24 +32,24 @@ time = data_in.time{trial};                                                 % ex
 % -------------------------------------------------------------------------
 % First method ("Hilbert-Method")
 % -------------------------------------------------------------------------
-data_filt = DualPiano_bandpass( data_in, lfreq, hfreq, true );              % extract the desired passband
-data_hilbert = DualPiano_hilbert( data_filt, 'angle');                      % estimate the hilbert phase
+data_filt = DP_bandpass( data_in, lfreq, hfreq, true );              % extract the desired passband
+data_hilbert = DP_hilbert( data_filt, 'angle');                      % estimate the hilbert phase
 
 hilbert_avRatio = data_hilbert.hilbert_avRatio;                             % save the hilbert average ratio (control validity)
                                                                             % see DUALPIANO_HILBERT for further informations
 phase1 = data_hilbert.trial{trial}(cmp1,:);                                 % extract phase of first component
 phase2 = data_hilbert.trial{trial}(cmp2,:);                                 % extract phase of the second component
 relPhase_hilbert = phase1 - phase2;                                         % extimate phase difference
-PLV_hilbert = DualPiano_phaseLockVal(relPhase_hilbert, winSize);            % calculate PLV (see DUALPIANO_PHASELOCKVAL) for further informations
+PLV_hilbert = DP_phaseLockVal(relPhase_hilbert, winSize);            % calculate PLV (see DUALPIANO_PHASELOCKVAL) for further informations
 
 % -------------------------------------------------------------------------
 % Second method ("FFT-Method")
 % -------------------------------------------------------------------------
-data_fieldtripPhase = DualPiano_fieldtripPhase( data_in, lfreq, hfreq, ...  % estimate the phase difference using FT_CONNECTIVITYANALYSIS 
+data_fieldtripPhase = DP_fieldtripPhase( data_in, lfreq, hfreq, ...  % estimate the phase difference using FT_CONNECTIVITYANALYSIS 
                                             trial, cmp1, cmp2 );            % together with 'plv' param.
 slot = ceil((hfreq+lfreq)/2/(hfreq-lfreq));                                 % extract the desired passband
 relPhase_fieldtrip(:) = data_fieldtripPhase.plvspctrm(1, slot, :);          % extract phase difference information
-PLV_fieldtrip = DualPiano_phaseLockVal(relPhase_fieldtrip, winSize);        % calculate PLV
+PLV_fieldtrip = DP_phaseLockVal(relPhase_fieldtrip, winSize);        % calculate PLV
 
 % -------------------------------------------------------------------------
 % Plot result of first method

@@ -1,5 +1,5 @@
-function DualPiano_databrowser(data_in)
-% DUALPIANO_DATABROWSER displays a dual_piano dataset using a appropriate
+function DP_databrowser(data_in)
+% DP_DATABROWSER displays a dual_piano dataset using a appropriate
 % scaling
 %
 % Params:

@@ -1,5 +1,5 @@
-function [ data_out ] = DualPiano_fieldtripPhase( data_in, lfreq, hfreq, trial, cmp1, cmp2 )
-% DUALPIANO_FIELDTRIPPHASE estimates the phase difference between two eeg
+function [ data_out ] = DP_fieldtripPhase( data_in, lfreq, hfreq, trial, cmp1, cmp2 )
+% DP_FIELDTRIPPHASE estimates the phase difference between two eeg
 % components using FT_FREQANALYSIS and FT_CONNECTIVITYANALYSIS
 %
 % Params:

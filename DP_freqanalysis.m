@@ -1,5 +1,5 @@
-function [ data_out ] = DualPiano_freqanalysis(data_in)
-% DUALPIANO_FREQANALYSIS performs a time frequency analysis with the 
+function [ data_out ] = DP_freqanalysis(data_in)
+% DP_FREQANALYSIS performs a time frequency analysis with the 
 % following settings:
 %   freq range:       1...30 Hz
 %   freq resolution:  1 Hz

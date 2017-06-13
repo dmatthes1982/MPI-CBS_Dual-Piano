@@ -1,5 +1,5 @@
-function [ data_out ] = DualPiano_freqanalysis_seg( data_in )
-% DUALPIANO_FREQANALYSIS_SEG estimates the TFR of a certain phrase of the
+function [ data_out ] = DP_freqanalysis_seg( data_in )
+% DP_FREQANALYSIS_SEG estimates the TFR of a certain phrase of the
 % DualPiano data. With the following parameters: time window length - 1sec,
 % Overlap - 50%, Frequency range - 0:1:64 Hz%
 %

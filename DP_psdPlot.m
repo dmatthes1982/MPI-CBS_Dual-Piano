@@ -1,5 +1,5 @@
-function DualPiano_psdPlot( signal, psd, varargin )
-% DUALPIANO_PSDPLOT
+function DP_psdPlot( signal, psd, varargin )
+% DP_PSDPLOT
 %
 %
 % Params:

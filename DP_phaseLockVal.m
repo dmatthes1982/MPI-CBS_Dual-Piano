@@ -1,5 +1,5 @@
-function [ PLV ] = DualPiano_phaseLockVal( diffPhase, T )
-% DUALPIANO_PHASELOCKVAL estimates the sliding phase locking value of a signal
+function [ PLV ] = DP_phaseLockVal( diffPhase, T )
+% DP_PHASELOCKVAL estimates the sliding phase locking value of a signal
 % of phase differences
 %
 % Params:

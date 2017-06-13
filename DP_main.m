@@ -1,4 +1,4 @@
-% DUALPIANO_MAIN 
+% DP_MAIN 
 % 
 % This script estimates and illustrates the epoch-related phase locking
 % values of two connections (run11_pl1 vs. run14_pl2 and run14_pl1
@@ -209,7 +209,7 @@ for dyad=dyads                                                              % Fo
     cfgPLV.winSize   = PLV_winSize;
     cfgPLV.rmErrTrls = true;                                                % exclude trials with errors
       
-    data_PLV = DualPiano_PLVoverTrials( cfgPLV, data );                     % calculate PLV course averaged over trials for a single dyad
+    data_PLV = DP_PLVoverTrials( cfgPLV, data );                     % calculate PLV course averaged over trials for a single dyad
                                                                             % and a specific condition
     if(min(min(data_PLV.hilbert_avRatio)) < 50)                             % display a warning, 
       warning('Some "Hilbert average value" is < 50.');                     % if in some dataset the narrow passband condition is violated
@@ -228,7 +228,7 @@ for dyad=dyads                                                              % Fo
       PLVmean{i, dyad} = data_PLV.PLVmean{i};
       
       subplot(2,4,condition+((i-1)*4));                                     % plot result
-      DualPiano_fancyPLVPlot(cfgPlot, PLVep{i, dyad}(condition,:));
+      DP_fancyPLVPlot(cfgPlot, PLVep{i, dyad}(condition,:));
       if(condition == 4 && i == 2)
         signalName{z} = sprintf('dyad %.0f', dyad);                         % add dyad number to the legend vector
         z = z + 1;                                                          % increase the pointer
@@ -258,9 +258,9 @@ cfgPlot.average = true;                                                     % pl
 
 for condition=1:1:4
   subplot(2,4,condition);
-  DualPiano_fancyPLVPlot(cfgPlot, PLVepDyads{1,1}(condition,:));
+  DP_fancyPLVPlot(cfgPlot, PLVepDyads{1,1}(condition,:));
   subplot(2,4,condition+4);
-  DualPiano_fancyPLVPlot(cfgPlot, PLVepDyads{2,1}(condition,:));
+  DP_fancyPLVPlot(cfgPlot, PLVepDyads{2,1}(condition,:));
 end
 
 signalName{z} = 'mean';                                                     % add the mean signal to the legend vector

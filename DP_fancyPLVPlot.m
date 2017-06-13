@@ -1,5 +1,5 @@
-function DualPiano_fancyPLVPlot( cfg, data_in )
-% DUALPIANO_FANCYPLVPLOT illustrates averaged phase lock values of three
+function DP_fancyPLVPlot( cfg, data_in )
+% DP_FANCYPLVPLOT illustrates averaged phase lock values of three
 % different epochs in a way shown in a paper of Guillaume Dumas (08/2010)
 %
 % Params:

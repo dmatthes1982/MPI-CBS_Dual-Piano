@@ -1,5 +1,5 @@
-function [ psd ] = DualPiano_psdCalc( signal, zerop, varargin )
-% DUALPIANO_PSDCOMMON estimates the zero padded or the non padded power
+function [ psd ] = DP_psdCalc( signal, zerop, varargin )
+% DP_PSDCOMMON estimates the zero padded or the non padded power
 % spectral densitiy of a signal
 %
 % Params:

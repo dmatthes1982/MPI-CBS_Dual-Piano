@@ -1,6 +1,6 @@
-function DualPiano_testAlphaMu_plot( time_data, psd_data, tfr_data, ...
+function DP_testAlphaMu_plot( time_data, psd_data, tfr_data, ...
   component, varargin )
-% DUALPIANO_TESTALPHAMY_PLOT generates a graphic consisting of multiple
+% DP_TESTALPHAMY_PLOT generates a graphic consisting of multiple
 % panels including different representations of a choosen component.
 %
 % Params:
@@ -75,9 +75,9 @@ r.FontWeight = 'bold';
 % -------------------------------------------------------------------------
 % Plot PSD and TFR
 % -------------------------------------------------------------------------
-DualPiano_psdPlot(time_data(component, :), psd_data.powspctrm( ...
+DP_psdPlot(time_data(component, :), psd_data.powspctrm( ...
   component, :), p, timeOffset);                                            % build a 2x1 subplot with time and frequency response
-DualPiano_singleplotTFR(tfr_data, 'all', component, [1 30], q);             % plot time-frequency response
+DP_singleplotTFR(tfr_data, 'all', component, [1 30], q);                    % plot time-frequency response
 
 % -------------------------------------------------------------------------
 % Save graphic as pdf-File

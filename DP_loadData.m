@@ -1,4 +1,4 @@
-function DualPiano_loadData( number )
+function DP_loadData( number )
 %DUALPIANO_LOADDATA 
 
 address = sprintf('../../data/DualPiano/Components_epoched/P%dcomb_condSpec.mat', number);

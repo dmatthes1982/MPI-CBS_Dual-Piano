@@ -1,5 +1,5 @@
-function [ data_out ] = DualPiano_psdanalysis( data_in )
-% DUALPIANO_PSDANALYSIS estimates the power spectral destiny with
+function [ data_out ] = DP_psdanalysis( data_in )
+% DP_PSDANALYSIS estimates the power spectral destiny with
 % the following settings:
 %   freq range:       0 ... Fs/2 Hz
 %   freq resolution:  Fs / L Hz

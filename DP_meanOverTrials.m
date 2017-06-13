@@ -1,5 +1,5 @@
-function [ data_out ] = DualPiano_meanOverTrials( data_in )
-% DUALPIANO_MEANOVERTRIALS calculates as its name suggested the mean value
+function [ data_out ] = DP_meanOverTrials( data_in )
+% DP_MEANOVERTRIALS calculates as its name suggested the mean value
 % of eeg signals from different trials
 %
 % Params:

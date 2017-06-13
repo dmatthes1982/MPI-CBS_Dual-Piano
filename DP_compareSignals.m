@@ -1,5 +1,5 @@
-function DualPiano_compareSignals( data_one, data_two, trial, comp1, comp2 )
-% DUALPIANO_COMPARESIGNALS plot to eeg signals for visual comparison 
+function DP_compareSignals( data_one, data_two, trial, comp1, comp2 )
+% DP_COMPARESIGNALS plot to eeg signals for visual comparison 
 %
 % Params:
 %   data_one         fieldtrip data structure

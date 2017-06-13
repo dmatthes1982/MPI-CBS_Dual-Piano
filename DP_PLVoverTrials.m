@@ -1,5 +1,5 @@
-function [ data_out ] = DualPiano_PLVoverTrials( cfg, data_in )
-% DUALPIANO_PLVOVERTRIALS estimates the phase locking value for different
+function [ data_out ] = DP_PLVoverTrials( cfg, data_in )
+% DP_PLVOVERTRIALS estimates the phase locking value for different
 % connections and within different trials an averages the curves of every
 % connection over all trials
 %
@@ -72,8 +72,8 @@ end
 % -------------------------------------------------------------------------
 % Estimate phase differences
 % -------------------------------------------------------------------------
-data_filt = DualPiano_bandpass( data_in, cfg.lfreq, cfg.hfreq, true );      % extract the desired passband 
-data_hilbert = DualPiano_hilbert( data_filt, 'angle');                      % estimate the hilbert phases
+data_filt = DP_bandpass( data_in, cfg.lfreq, cfg.hfreq, true );             % extract the desired passband 
+data_hilbert = DP_hilbert( data_filt, 'angle');                             % estimate the hilbert phases
 
 % -------------------------------------------------------------------------
 % Get number of accurate trials
@@ -94,7 +94,7 @@ for k=1:1:connections                                                       % fo
   for i=1:1:trials                                                          % for every trial
     diffPhase_hilbert{k}(i, :) = data_hilbert.trial{i}(cfg.nmbcmp{k,1},...  % get specific phase difference trend
       :) - data_hilbert.trial{i}(cfg.nmbcmp{k,2},:);
-    PLVs{k}(i, :) = DualPiano_phaseLockVal(diffPhase_hilbert{k}(i, :), ...  % calculate PLVs (see DUALPIANO_PHASELOCKVAL) for further informations 
+    PLVs{k}(i, :) = DP_phaseLockVal(diffPhase_hilbert{k}(i, :), ...         % calculate PLVs (see DUALPIANO_PHASELOCKVAL) for further informations 
       cfg.winSize);
   end
   if cfg.rmErrTrls == true                                                  % if faulty trials should be excluded

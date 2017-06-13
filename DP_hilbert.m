@@ -1,5 +1,5 @@
-function [ data_out ] = DualPiano_hilbert( data_in, hilbert )
-% DUALPIANO_HILBERT estimates the Hilbert transform auf a given signal and
+function [ data_out ] = DP_hilbert( data_in, hilbert )
+% DP_HILBERT estimates the Hilbert transform auf a given signal and
 % returns a certain part('abs' or 'angle')
 %
 % Params:

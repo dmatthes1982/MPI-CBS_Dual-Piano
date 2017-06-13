@@ -1,5 +1,5 @@
-function DualPiano_singleplotTFR(data_in, varargin)
-% DUALPIANO_SINGLEPLOTTFR generates a graphic consisting of different time
+function DP_singleplotTFR(data_in, varargin)
+% DP_SINGLEPLOTTFR generates a graphic consisting of different time
 % frequency plots
 %
 % Params:

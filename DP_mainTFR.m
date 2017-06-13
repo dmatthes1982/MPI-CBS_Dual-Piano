@@ -1,4 +1,4 @@
-% DUALPIANO_MAINTFR
+% DP_MAINTFR
 %
 % This script estimates and illustrates the time frequency response of the
 % four motor components (run11_pl1, run14_pl1, run11_pl2 and run14_pl2) for
@@ -104,12 +104,12 @@ for dyad=1:1:dyads
         error('unknown condition');
   end
   
-  tmp = DualPiano_freqanalysis(data);                                       % calculate the spectrum for the loaded data 
+  tmp = DP_freqanalysis(data);                                              % calculate the spectrum for the loaded data 
   tempPowSpctrm = tempPowSpctrm + tmp.powspctrm;                            % add the result to the previous one
 end
 
 tmp.powspctrm = tempPowSpctrm/dyads;                                        % calculate the average value
-DualPiano_singleplotTFR(tmp, trial, components, freq_range);                % plot the results
+DP_singleplotTFR(tmp, trial, components, freq_range);                % plot the results
 
 disp('data processing accomplished!');                                      % note the end of the process
 
