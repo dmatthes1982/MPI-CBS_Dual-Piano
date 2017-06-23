@@ -19,7 +19,7 @@ function [ data_out ] = DP_psdanalysis( data_in )
 Fs = data_in.fsample;
 L = length(data_in.time{1});
 
-warning('off','all');
+ft_warning off;
 
 cfg                 = [];
 cfg.method          = 'mtmfft';
@@ -35,6 +35,6 @@ cfg.showcallinfo    = 'no';                                                 % su
 
 data_out = ft_freqanalysis(cfg, data_in);                                   % calculate power spectral density
 
-warning('on','all');
+ft_warning on;
 
 end

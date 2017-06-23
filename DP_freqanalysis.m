@@ -17,7 +17,7 @@ function [ data_out ] = DP_freqanalysis(data_in)
 
 % Copyright (C) 2017, Daniel Matthes, MPI CBS
 
-warning('off','all');
+ft_warning off;
 
 cfg                 = [];
 cfg.method          = 'mtmconvol';
@@ -35,6 +35,6 @@ cfg.showcallinfo    = 'no';                                                 % su
 
 data_out = ft_freqanalysis(cfg, data_in);                                   % calculate time frequency responses
 
-warning('on','all');
+ft_warning on;
 
 end
