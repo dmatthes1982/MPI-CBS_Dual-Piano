@@ -118,10 +118,16 @@ cfg.parameter      = 'powspctrm';
 cfg.feedback       = 'no';
 cfg.showcallinfo   = 'no';
 
+ft_info off;
+
+disp('Computing average powspctrm over 7 segments...');
+
 data_CF_psd2       = ft_freqgrandaverage(cfg, data_CF_psdseg{1:7});
 data_CU_psd2       = ft_freqgrandaverage(cfg, data_CU_psdseg{1:7});
 data_UF_psd2       = ft_freqgrandaverage(cfg, data_UF_psdseg{1:7});
 data_UU_psd2       = ft_freqgrandaverage(cfg, data_UU_psdseg{1:7});
+
+ft_info on;
 
 clear data_CF_psdseg data_CU_psdseg data_UF_psdseg data_UU_psdseg ...
   data_CF_seg data_CU_seg data_UF_seg data_UU_seg cfg j
